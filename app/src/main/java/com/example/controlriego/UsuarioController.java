@@ -85,7 +85,7 @@ public class UsuarioController {
             usuarios.add(userObtenidoDeBD);
         } while (cursor.moveToNext());
 
-        // Fin del ciclo. Cerramos cursor y regresamos la lista de mascotas :)
+        // Fin del ciclo. Cerramos cursor y regresamos la lista:)
         cursor.close();
         return usuarios;
 
