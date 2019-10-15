@@ -16,12 +16,12 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table usuarios(id integer primary key autoincrement,usuario text,contrasena text)");
-        db.execSQL("insert into usuarios (usuario, contrsena) values('admin','admin')");
+        db.execSQL("insert into usuarios (usuario, contrasena) values('admin','admin')");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("create table usuarios(id integer primary key autoincrement,usuario text,contrasena text)");
-        db.execSQL("insert into usuarios (usuario, contrsena) values('admin','admin')");
+        db.execSQL("insert into usuarios (usuario, contrasena) values('admin','admin')");
     }
 }
