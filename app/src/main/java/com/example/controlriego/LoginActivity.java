@@ -50,8 +50,10 @@ public class LoginActivity extends AppCompatActivity {
         if (usuariosConsulta.size()>0){
             //si son iguales entonces vamos a otra ventana
             //Menu es una nueva actividad empty
-            Intent ven=new Intent(this,LoginActivity.class);
-            startActivity(ven);
+            Intent intent = new Intent(this, MainActivity.class);
+            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
             //limpiamos las las cajas de texto
             txtUsuario.setText("");
             txtContrasena.setText("");

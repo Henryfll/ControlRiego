@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragmentLista"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.ListaPropiedadesFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="56dp"
+        android:id="@+id/srlContainer"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/content"
+                android:orientation="vertical"
+                >
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/listViewAtractivos">
+
+                </ListView>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressBar_atractivos"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    style="?android:attr/progressBarStyleLarge"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+</FrameLayout>
