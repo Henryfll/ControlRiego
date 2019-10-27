@@ -33,17 +33,17 @@ public class PropiedadAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return listPropiedades.size();
     }
 
     @Override
-    public Object getItem(int i) {
-        return null;
+    public Object getItem(int position) {
+        return listPropiedades.get(position);
     }
 
     @Override
-    public long getItemId(int i) {
-        return 0;
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override

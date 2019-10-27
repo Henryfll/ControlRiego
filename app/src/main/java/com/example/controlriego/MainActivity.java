@@ -1,12 +1,12 @@
 package com.example.controlriego;
 
-import android.content.Intent;
+
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
+import butterknife.ButterKnife;
 import com.example.controlriego.Fragment.ListaPropiedadesFragment;
 
 public class MainActivity extends AppCompatActivity implements ListaPropiedadesFragment.OnFragmentInteractionListener {
@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements ListaPropiedadesF
         setContentView(R.layout.activity_main);
 
         setFragment(listPropiedadesFragment);
+        ButterKnife.bind(this);
     }
 
     @Override

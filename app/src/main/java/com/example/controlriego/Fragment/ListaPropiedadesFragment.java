@@ -95,8 +95,15 @@ public class ListaPropiedadesFragment extends Fragment implements SwipeRefreshLa
 
             }
         });
-        ConsultarPropiedades();
+
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ConsultarPropiedades();
+
     }
     public void ConsultarPropiedades(){
         PropiedadesModel obj=new PropiedadesModel();
