@@ -257,7 +257,8 @@
     <color name="yellow_A700">#FFD600</color>
 
     <string name="app_name">ControlRiego</string>
-
+    <string name="dialog_confirm_button">Confirmar</string>
+    <string name="dialog_cancel_button">Cancelar</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
