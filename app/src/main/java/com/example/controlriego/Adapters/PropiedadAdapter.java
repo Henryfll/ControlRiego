@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.controlriego.ControlActivity;
 import com.example.controlriego.Models.PropiedadesModel;
 import com.example.controlriego.R;
 
@@ -65,11 +66,11 @@ public class PropiedadAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(context, AtractivoActivity.class);
-                intent.putExtra("atractivoKey", listAtractivo.get(position).getKey());
-                intent.putExtra("atractivoNombre", listAtractivo.get(position).getNombre());
-                intent.putExtra("distancia", finalDistanciaStr);
-                context.startActivity(intent);*/
+                Intent intent = new Intent(context, ControlActivity.class);
+
+                intent.putExtra("propiedadNombre", listPropiedades.get(position).getNombre());
+
+                context.startActivity(intent);
             }
         });
         return view;
