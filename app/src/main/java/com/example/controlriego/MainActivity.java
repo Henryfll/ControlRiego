@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import butterknife.ButterKnife;
 
+import com.example.controlriego.Controllers.UsuarioController;
 import com.example.controlriego.Fragment.AcercaDeFragment;
 import com.example.controlriego.Fragment.DialogAppFragment;
 import com.example.controlriego.Fragment.ListaPropiedadesFragment;
@@ -78,16 +79,21 @@ public class MainActivity extends AppCompatActivity implements ListaPropiedadesF
         dialogAppFragment.show(getSupportFragmentManager(), "NoticeDialogFragment");
     }
     private void logOut() {
+        UsuarioController usuarioController = new UsuarioController(this);
+        usuarioController.ActualizarUsuarioConectado("nadie", 0);
         goLogInScreen();
     }
     private void goLogInScreen() {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+
     }
 
     @Override
-    public void onDialogConfirmClick(DialogFragment dialog) { logOut(); }
+    public void onDialogConfirmClick(DialogFragment dialog) {
+
+        logOut(); }
 
     @Override
     public void onDialogCancelClick(DialogFragment dialog) { // Para cancelar la acción de cerrar sesión.
