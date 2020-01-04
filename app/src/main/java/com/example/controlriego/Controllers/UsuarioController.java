@@ -1,15 +1,18 @@
-package com.example.controlriego;
+package com.example.controlriego.Controllers;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.controlriego.ConexionSQLiteHelper;
+import com.example.controlriego.Models.Usuario;
+
 import java.util.ArrayList;
 
 public class UsuarioController {
     private ConexionSQLiteHelper ayudanteBaseDeDatos;
-    private String NOMBRE_TABLA = "usuario";
+    private String NOMBRE_TABLA = "usuarios";
 
     public UsuarioController(Context contexto) {
         ayudanteBaseDeDatos = new ConexionSQLiteHelper(contexto,"bd_controlriego",null,1);
@@ -49,18 +52,9 @@ public class UsuarioController {
         // readable porque no vamos a modificar, solamente leer
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getReadableDatabase();
         // SELECT nombre, edad, id
-        String[] columnasAConsultar = {"id", "usuario", "contrasena"};
+        String[] columnasAConsultar = {"id", "usuario", "contrasena" };
         Cursor cursor=baseDeDatos.rawQuery("select usuario,contrasena from usuarios where usuario='"+usuario+"' and contrasena='"+contrasena+"'",null);
 
-        /*Cursor cursor = baseDeDatos.query(
-                NOMBRE_TABLA,
-                columnasAConsultar,
-                null,
-                null,
-                null,
-                null,
-                null
-        );*/
 
         if (cursor == null) {
             /*
@@ -79,8 +73,6 @@ public class UsuarioController {
             // El 0 es el número de la columna, como seleccionamos
             String usuarioObtenidoDeBD = cursor.getString(0);
             String contrasenaObtenidaDeBD = cursor.getString(1);
-            System.out.println("Valores base " +usuarioObtenidoDeBD);
-            System.out.println("Valores base " +contrasenaObtenidaDeBD);
             Usuario userObtenidoDeBD = new Usuario(usuarioObtenidoDeBD, contrasenaObtenidaDeBD);
             usuarios.add(userObtenidoDeBD);
         } while (cursor.moveToNext());
@@ -89,5 +81,46 @@ public class UsuarioController {
         cursor.close();
         return usuarios;
 
+    }
+
+    public Usuario obtenerUsuarioConectado() {
+        Usuario usuario_con = new Usuario();
+        // readable porque no vamos a modificar, solamente leer
+        SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getReadableDatabase();
+        String[] columnasAConsultar = {"id", "usuario", "contrasena" };
+        Cursor cursor=baseDeDatos.rawQuery("select usuario,contrasena from usuarios where estado_conexion=1",null);
+
+
+        if (cursor == null) {
+            return usuario_con;
+
+        }
+        // Si no hay datos, igualmente regresamos la lista vacía
+        if (!cursor.moveToFirst()) return usuario_con;
+
+        do {
+            // El 0 es el número de la columna, como seleccionamos
+            String usuarioObtenidoDeBD = cursor.getString(0);
+            String contrasenaObtenidaDeBD = cursor.getString(1);
+            usuario_con = new Usuario(usuarioObtenidoDeBD, contrasenaObtenidaDeBD);
+
+        } while (cursor.moveToNext());
+
+        // Fin del ciclo. Cerramos cursor y regresamos la lista:)
+        cursor.close();
+        return usuario_con;
+
+    }
+
+    public void ActualizarUsuarioConectado(String usuarioEditado, int estado) {
+        SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
+        /*ContentValues valoresParaActualizar = new ContentValues();
+        valoresParaActualizar.put("estado_conexion", estado);
+        String campoParaActualizar = "usuario = "+usuarioEditado;
+        baseDeDatos.update(NOMBRE_TABLA, valoresParaActualizar, campoParaActualizar, null);*/
+        if(estado ==1)
+            baseDeDatos.execSQL("UPDATE '"+NOMBRE_TABLA+"' SET estado_conexion='"+estado+"' WHERE usuario='"+usuarioEditado+"' ");
+        else
+            baseDeDatos.execSQL("UPDATE '"+NOMBRE_TABLA+"' SET estado_conexion='"+estado+"' WHERE usuario!='"+usuarioEditado+"' ");
     }
 }

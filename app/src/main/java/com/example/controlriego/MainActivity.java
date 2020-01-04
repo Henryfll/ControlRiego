@@ -13,11 +13,15 @@ import android.view.MenuItem;
 
 import butterknife.ButterKnife;
 
+import com.example.controlriego.Controllers.UsuarioController;
 import com.example.controlriego.Fragment.AcercaDeFragment;
 import com.example.controlriego.Fragment.DialogAppFragment;
 import com.example.controlriego.Fragment.ListaPropiedadesFragment;
+import com.example.controlriego.Fragment.SincronizacionAutorizacionFragment;
+import com.example.controlriego.Fragment.SincronizacionBaseFragment;
 
-public class MainActivity extends AppCompatActivity implements ListaPropiedadesFragment.OnFragmentInteractionListener , AcercaDeFragment.OnFragmentInteractionListener,DialogAppFragment.NoticeDialogListener{
+public class MainActivity extends AppCompatActivity implements ListaPropiedadesFragment.OnFragmentInteractionListener , AcercaDeFragment.OnFragmentInteractionListener,DialogAppFragment.NoticeDialogListener,
+        SincronizacionAutorizacionFragment.OnFragmentInteractionListener, SincronizacionBaseFragment.OnFragmentInteractionListener {
     private boolean INICIO_APP_PRIMERA_VEZ = true;
     private static final int DIALOG_SIGN_OFF = 1;
     private DialogAppFragment dialogAppFragment; // Varibale para controlar el Dialogo de cerrar sesion.
@@ -78,16 +82,21 @@ public class MainActivity extends AppCompatActivity implements ListaPropiedadesF
         dialogAppFragment.show(getSupportFragmentManager(), "NoticeDialogFragment");
     }
     private void logOut() {
+        UsuarioController usuarioController = new UsuarioController(this);
+        usuarioController.ActualizarUsuarioConectado("nadie", 0);
         goLogInScreen();
     }
     private void goLogInScreen() {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+
     }
 
     @Override
-    public void onDialogConfirmClick(DialogFragment dialog) { logOut(); }
+    public void onDialogConfirmClick(DialogFragment dialog) {
+
+        logOut(); }
 
     @Override
     public void onDialogCancelClick(DialogFragment dialog) { // Para cancelar la acción de cerrar sesión.

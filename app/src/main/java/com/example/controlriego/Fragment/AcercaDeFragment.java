@@ -6,12 +6,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.text.Html;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.Button;
 
 import com.example.controlriego.R;
 
@@ -20,8 +19,7 @@ public class AcercaDeFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private TextView txtContenidoBeneficiosAcercaDe, txtContenidoDependeciasAcercaDe, txtContenidoColaboradoresAcercaDe;
-    private ImageButton btnFacebook, btnTwitter, btnYoutube, btnWebPage;
+    private Button btnSincronizacion;
 
     // Required empty public constructor
     public AcercaDeFragment() {}
@@ -31,11 +29,24 @@ public class AcercaDeFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_acerca_de, container, false);
-
+        btnSincronizacion= (Button) view.findViewById(R.id.btn_sincronizar);
+        btnSincronizacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SincronizacionAutorizacionFragment sf=new SincronizacionAutorizacionFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.main_fragment, sf).commit();
+                /*getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_fragment,sf)
+                        .addToBackStack(null)
+                        .commit();*/
+            }
+        });
 
         return view;
     }
@@ -69,54 +80,11 @@ public class AcercaDeFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    private void setInformationAboutPage() {
-        txtContenidoBeneficiosAcercaDe.setText(Html.fromHtml("&#8226" + " Tecnología de realidad aumentada." + "<br>" + "&#8226"
-                + " Inteligencia artificial." + "<br>" + "&#8226" + " Información de los Atractivos y servicios." + "<br>" + "&#8226"
-                + " Inclusión de mapas." + "<br>" + "&#8226" + " Ubicación del usuario, atractivos y servicios."));
-
-        txtContenidoDependeciasAcercaDe.setText(Html.fromHtml("&#8226" + " Conexión a internet o plan de datos." + "<br>" + "&#8226"
-                + " Permitir ubicación del usuario." + "<br>" + "&#8226" + " Permitir acceso a la cámara."));
-
-        txtContenidoColaboradoresAcercaDe.setText(Html.fromHtml("&#8226" + " GAD Municipal del Cantón Latacunga."));
-    }
 
     private Intent socialIntent(String url) {
         Uri uri = Uri.parse(url);
         return new Intent(Intent.ACTION_VIEW, uri);
     }
 
-    private void openSocialLinks() {
 
-        btnFacebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent facebookLink = socialIntent("https://www.facebook.com/AmaLatacunga/");
-                startActivity(facebookLink);
-            }
-        });
-
-        btnWebPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent webPageLink = socialIntent("http://amalatacunga.com/");
-                startActivity(webPageLink);
-            }
-        });
-
-        btnYoutube.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent youtubeLink = socialIntent("https://www.youtube.com/channel/UC9VpemTyg53ko7RFUPye9MA");
-                startActivity(youtubeLink);
-            }
-        });
-
-        btnTwitter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent twitterLink = socialIntent("https://twitter.com/amalatacunga");
-                startActivity(twitterLink);
-            }
-        });
-    }
 }
