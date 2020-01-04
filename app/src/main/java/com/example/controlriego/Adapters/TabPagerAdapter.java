@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.controlriego.Fragment.Tab_control;
+import com.example.controlriego.Fragment.Tab_lluvia;
 
 
 public class TabPagerAdapter extends FragmentStatePagerAdapter {
@@ -26,7 +27,10 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
                 Tab_control tab_control= new Tab_control();
                 tab_control.keyatractivo = this.keyAtractivo;
                 return tab_control;
-
+            case 1:
+                Tab_lluvia tab_lluvia= new Tab_lluvia();
+               // tab_lluvia.keyatractivo = this.keyAtractivo;
+                return tab_lluvia;
             default:
                 return null;
         }

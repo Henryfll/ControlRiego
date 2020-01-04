@@ -124,6 +124,7 @@ public class ControlActivity extends AppCompatActivity implements TabLayout.OnTa
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         //Adding the tabs using addTab() method
         tabLayout.addTab(tabLayout.newTab().setText("Detalle"));
+        tabLayout.addTab(tabLayout.newTab().setText("Lluvia"));
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         //Initializing viewPager

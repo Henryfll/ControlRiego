@@ -71,25 +71,25 @@
                     android:id="@+id/Canal1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tipo 1" />
+                    android:text="LOTE A" />
 
                 <Switch
                     android:id="@+id/Canal2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tipo 2" />
+                    android:text="LOTE B" />
 
                 <Switch
                     android:id="@+id/switch3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tipo 3" />
+                    android:text="LOTE C" />
 
                 <Switch
                     android:id="@+id/Canal4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tipo 4" />
+                    android:text="LOTE D" />
             </LinearLayout>
 
 
