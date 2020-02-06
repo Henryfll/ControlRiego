@@ -1,98 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fragmentLista"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.Tab_control">
 
-    <android.support.v4.widget.NestedScrollView
+    <!-- TODO: Update blank fragment layout -->
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp">
-
+        android:layout_marginBottom="56dp"
+        android:id="@+id/srlContainer"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="12dp"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txtTituloAtractivo"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:textColor="@color/black"
-                android:text="Titulo"
-                android:layout_marginBottom="5dp"
-                />
-
-
-            <com.borjabravo.readmoretextview.ReadMoreTextView
-                android:id="@+id/text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Breve Descripcion de la propiedad"
-                app:colorClickableText="@color/colorAccent"
-                app:showTrimExpandedText="true"
-                app:trimCollapsedText="Ver mas"
-                app:trimExpandedText="Ver menos"
-                app:trimLength="500"
-
-                app:trimMode="trimModeLength" />
-
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Goteros(Inicio/Fin)"
-                android:textAlignment="center"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="110dp"
-                app:srcCompat="@drawable/ic_clima" />
+            android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/horarioLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:orientation="vertical">
-
-                <Switch
-                    android:id="@+id/Canal1"
+                android:layout_height="match_parent"
+                android:id="@+id/content"
+                android:orientation="vertical"
+                >
+                <ListView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="LOTE A" />
+                    android:layout_height="match_parent"
+                    android:id="@+id/listViewLotes">
 
-                <Switch
-                    android:id="@+id/Canal2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="LOTE B" />
-
-                <Switch
-                    android:id="@+id/switch3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="LOTE C" />
-
-                <Switch
-                    android:id="@+id/Canal4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="LOTE D" />
+                </ListView>
             </LinearLayout>
 
-
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressBar_lotes"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    style="?android:attr/progressBarStyleLarge"
+                    />
+            </RelativeLayout>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-</android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+</FrameLayout>
+

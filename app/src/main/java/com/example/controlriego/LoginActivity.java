@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     public void ingresar(View v){
         String usuario=txtUsuario.getText().toString();
         String contrasena=txtContrasena.getText().toString();
+        consumirServicio();
         usuariosConsulta = new ArrayList<Usuario>();
         usuarioController = new UsuarioController(this);
         //fila=db.rawQuery("select usuario,contrasena from usuarios where usuario='"+usuario+"' and contrasena='"+contrasena+"'",null);
@@ -65,6 +66,15 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Usuario incorrecto", Toast.LENGTH_LONG).show();
         }
 
+    }
+    public void consumirServicio(){
+        // ahora ejecutaremos el hilo creado
+        String username= "ADMIN";
+        String password= "ADMIN";
+
+
+        ServicioTask servicioTask= new ServicioTask(this,"https://api.ofcorp.com.ec/users/login",username,password);
+        servicioTask.execute();
     }
 
 }

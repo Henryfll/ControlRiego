@@ -121,7 +121,6 @@ public class ListaPropiedadesFragment extends Fragment implements SwipeRefreshLa
         obj1.setPathImagen("drawable/ic_picture");
         listaPropiedades.add(obj1);
         if(getContext()!= null) {
-            System.out.println("Cargo de lista "+listaPropiedades.size());
             listView.setAdapter(new PropiedadAdapter(getContext(),listaPropiedades));
         }
     }

@@ -9,9 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.widget.ListView;
 
 import com.example.controlriego.Adapters.TabPagerAdapter;
 import com.example.controlriego.Adapters.ViewPagerAdapter;
+import com.example.controlriego.Models.LoteModel;
 
 import java.util.ArrayList;
 
@@ -23,7 +25,6 @@ public class ControlActivity extends AppCompatActivity implements TabLayout.OnTa
     public CircleIndicator circleIndicator; // Indicador de viewpager imagenes
 
     ViewPagerAdapter viewPagerAdapter ;
-
 
     private TabLayout tabLayout; // Este es nuestro tabLayout
 
