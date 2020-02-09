@@ -32,6 +32,8 @@ public class ControlActivity extends AppCompatActivity implements TabLayout.OnTa
 
     private static ArrayList<String> listaImagenes = new ArrayList<>();
     String nombrePropiedad="";
+    long idPropiedad;
+    String urlImagen;
     AppBarLayout Appbar;
     CollapsingToolbarLayout CoolToolbar;
     Toolbar toolbar;
@@ -80,7 +82,8 @@ public class ControlActivity extends AppCompatActivity implements TabLayout.OnTa
 
 
             this.nombrePropiedad = getIntent().getExtras().getString("atractivoNombre");
-
+            this.idPropiedad=getIntent().getExtras().getLong("idPropiedad");
+            this.urlImagen=getIntent().getExtras().getString("urlImagen");
             if(getSupportActionBar() != null){
                 getSupportActionBar().setTitle(nombrePropiedad);
             }
@@ -97,7 +100,7 @@ public class ControlActivity extends AppCompatActivity implements TabLayout.OnTa
     private void getPropiedad() {
         //cargar data
         listaImagenes.clear();// Limpia el arreglo de imagenes
-
+        listaImagenes.add("https://api.ofcorp.com.ec/img/"+urlImagen);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         final int width = metrics.widthPixels; // ancho absoluto en pixels
@@ -132,7 +135,7 @@ public class ControlActivity extends AppCompatActivity implements TabLayout.OnTa
         viewPagerTab = (ViewPager) findViewById(R.id.pager);
 
         //Creating our pager adapter
-        TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(),nombrePropiedad);
+        TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(),nombrePropiedad,idPropiedad);
         //Adding adapter to pager
         viewPagerTab.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 

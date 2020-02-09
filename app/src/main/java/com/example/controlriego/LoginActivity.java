@@ -9,11 +9,23 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.controlriego.Controllers.UsuarioController;
+import com.example.controlriego.Models.FincaModel;
+import com.example.controlriego.Models.GoteroModel;
+import com.example.controlriego.Models.GoterosLotesModel;
+import com.example.controlriego.Models.LoteModel;
 import com.example.controlriego.Models.Usuario;
+import com.example.controlriego.Models.UsuarioDto;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity{
 
 
     //creamos la variables locales
@@ -50,12 +62,12 @@ public class LoginActivity extends AppCompatActivity {
     public void ingresar(View v){
         String usuario=txtUsuario.getText().toString();
         String contrasena=txtContrasena.getText().toString();
-        consumirServicio();
+        consumirServicio(usuario,contrasena);
+        //DescargarData(); listas de consumir servicio
+
         usuariosConsulta = new ArrayList<Usuario>();
         usuarioController = new UsuarioController(this);
-        //fila=db.rawQuery("select usuario,contrasena from usuarios where usuario='"+usuario+"' and contrasena='"+contrasena+"'",null);
         usuariosConsulta = usuarioController.obtenerUsuarios(usuario, contrasena);
-                //preguntamos si el cursor tiene algun valor almacenado
            //preguntamos si los datos ingresados son iguales
         if (usuariosConsulta.size()>0){
             usuarioController.ActualizarUsuarioConectado(usuario, 1);
@@ -67,14 +79,124 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
-    public void consumirServicio(){
+    public void consumirServicio(String username,String password){
         // ahora ejecutaremos el hilo creado
-        String username= "ADMIN";
-        String password= "ADMIN";
-
-
+        String resultado=null;
+        UsuarioDto UsuarioRespuesta=null;
         ServicioTask servicioTask= new ServicioTask(this,"https://api.ofcorp.com.ec/users/login",username,password);
-        servicioTask.execute();
+        try {
+            resultado =servicioTask.execute().get(2000, TimeUnit.MILLISECONDS);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+        if (resultado=="406"){
+
+        }else{
+            Gson gson = new Gson();
+            Type type = new TypeToken< ArrayList<UsuarioDto>>(){}.getType();
+            ArrayList<UsuarioDto>Respuesta=gson.fromJson(resultado, type);
+            UsuarioRespuesta=Respuesta.get(0);
+          /*  Usuario usuario= new Usuario();
+            usuario.setId(UsuarioRespuesta.getId_usuario());
+            usuario.setUsuario(username);
+            usuario.setContrasena(password);
+            System.out.println("usuario "+usuario.toString());
+            usuarioController.guardarCambios(usuario);*/
+        }
+        if(UsuarioRespuesta!=null){
+
+            ArrayList<FincaModel> fincas=new ArrayList<FincaModel>();
+            ArrayList<LoteModel> lotes=new ArrayList<LoteModel>();
+            ArrayList<GoteroModel> goteros=new ArrayList<GoteroModel>();
+            ArrayList<GoterosLotesModel> goterosLote=new ArrayList<GoterosLotesModel>();
+        //Fincas
+            ServiciosPost servicioTaskFincas= new ServiciosPost(this,"https://api.ofcorp.com.ec/fincas",UsuarioRespuesta.getApi_token(), (int) UsuarioRespuesta.getId_usuario());
+            try {
+                resultado=null;
+                resultado =servicioTaskFincas.execute().get(1000, TimeUnit.MILLISECONDS);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (TimeoutException e) {
+                e.printStackTrace();
+            }
+            if(resultado!=null){
+                Gson gson = new Gson();
+                Type founderListType = new TypeToken<ArrayList<FincaModel>>(){}.getType();
+                fincas=gson.fromJson(resultado , founderListType);
+            }
+         //Lotes
+            ServiciosPost servicioTaskLotes= new ServiciosPost(this,"https://api.ofcorp.com.ec/lotes",UsuarioRespuesta.getApi_token(), (int) UsuarioRespuesta.getId_usuario());
+            try {
+                resultado=null;
+                resultado =servicioTaskLotes.execute().get(1000, TimeUnit.MILLISECONDS);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (TimeoutException e) {
+                e.printStackTrace();
+            }
+            if(resultado!=null){
+                Gson gson = new Gson();
+                Type founderListType = new TypeToken<ArrayList<LoteModel>>(){}.getType();
+                lotes=gson.fromJson(resultado , founderListType);
+            }
+         //Goteros
+            ServiciosPost servicioTaskGoteros= new ServiciosPost(this,"https://api.ofcorp.com.ec/goteros",UsuarioRespuesta.getApi_token(), (int) UsuarioRespuesta.getId_usuario());
+            try {
+                resultado=null;
+                resultado =servicioTaskGoteros.execute().get(1000, TimeUnit.MILLISECONDS);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (TimeoutException e) {
+                e.printStackTrace();
+            }
+            if(resultado!=null){
+                Gson gson = new Gson();
+                Type founderListType = new TypeToken<ArrayList<GoteroModel>>(){}.getType();
+                goteros=gson.fromJson(resultado , founderListType);
+            }
+         //Goteros por Lote
+            ServiciosPost servicioTaskGoteroLote= new ServiciosPost(this,"https://api.ofcorp.com.ec/goteroslote",UsuarioRespuesta.getApi_token(), (int) UsuarioRespuesta.getId_usuario());
+            try {
+                resultado=null;
+                resultado =servicioTaskGoteroLote.execute().get(1000, TimeUnit.MILLISECONDS);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (TimeoutException e) {
+                e.printStackTrace();
+            }
+            if(resultado!=null){
+                Gson gson = new Gson();
+                Type founderListType = new TypeToken<ArrayList<GoterosLotesModel>>(){}.getType();
+                goterosLote=gson.fromJson(resultado , founderListType);
+            }
+            //Guardar en la base
+            System.out.println("fincas "+fincas.size()+"lotes "+lotes.size()+"goteros "+goteros.size()+"goteroLote "+goterosLote.size());
+            DescargarData(fincas,lotes,goteros,goterosLote);
+        }
+
+
+
     }
+
+    public void DescargarData(ArrayList<FincaModel> fincas, ArrayList<LoteModel> lotes, ArrayList<GoteroModel> goteros, ArrayList<GoterosLotesModel> goterosLotes){
+        TransaccionesBDD transaccionesBDD = new TransaccionesBDD(getApplicationContext());
+        transaccionesBDD.InsertarFincas(fincas);
+        transaccionesBDD.InsertarLotes(lotes);
+        transaccionesBDD.InsertarGoteros(goteros);
+        transaccionesBDD.InsertarGoterosLotes(goterosLotes);
+    }
+
 
 }

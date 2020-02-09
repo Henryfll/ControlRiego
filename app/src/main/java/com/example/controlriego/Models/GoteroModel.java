@@ -4,9 +4,9 @@ public class GoteroModel {
     private long got_codigo; // El ID de la B
     private String descripcion;
     private double litro_hora;
-    private Character estado;
+    private String estado;
 
-    public GoteroModel(long got_codigo, String descripcion, double litro_hora, Character estado) {
+    public GoteroModel(long got_codigo, String descripcion, double litro_hora, String estado) {
         this.got_codigo = got_codigo;
         this.descripcion = descripcion;
         this.litro_hora = litro_hora;
@@ -37,11 +37,11 @@ public class GoteroModel {
         this.litro_hora = litro_hora;
     }
 
-    public Character getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(Character estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 }

@@ -12,8 +12,11 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.example.controlriego.Adapters.PropiedadAdapter;
+import com.example.controlriego.Models.FincaModel;
 import com.example.controlriego.R;
 import com.example.controlriego.Models.PropiedadesModel;
+import com.example.controlriego.TransaccionesBDD;
+
 import java.util.ArrayList;
 import android.annotation.TargetApi;
 import android.os.Handler;
@@ -35,7 +38,7 @@ public class ListaPropiedadesFragment extends Fragment implements SwipeRefreshLa
 
     private SwipeRefreshLayout swipeContainer; // permite recargar los datos
 
-    public ArrayList<PropiedadesModel> listaPropiedades = new ArrayList<>(); // Array de atractivos
+    public ArrayList<FincaModel> listaPropiedades = new ArrayList<>(); // Array de atractivos
 
     private OnFragmentInteractionListener mListener;
 
@@ -106,7 +109,7 @@ public class ListaPropiedadesFragment extends Fragment implements SwipeRefreshLa
 
     }
     public void ConsultarPropiedades(){
-        PropiedadesModel obj=new PropiedadesModel();
+        /*PropiedadesModel obj=new PropiedadesModel();
         obj.setId(0);
         obj.setCategoria("Finca");
         obj.setNombre("Finca Prueba");
@@ -119,7 +122,9 @@ public class ListaPropiedadesFragment extends Fragment implements SwipeRefreshLa
         obj1.setNombre("Finca Prueba");
         obj1.setDescripcion("Finca para el control de riego de agua");
         obj1.setPathImagen("drawable/ic_picture");
-        listaPropiedades.add(obj1);
+        listaPropiedades.add(obj1);*/
+        TransaccionesBDD transaccion = new TransaccionesBDD(getContext());
+        listaPropiedades = transaccion.consultarFincas();
         if(getContext()!= null) {
             listView.setAdapter(new PropiedadAdapter(getContext(),listaPropiedades));
         }

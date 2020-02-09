@@ -6,14 +6,12 @@ public class LoteModel {
     private long fin_codigo;
     private String nombre;
     private String descripcion;
-    private Character estado;
 
-    public LoteModel(long lot_codigo, long fin_codigo, String nombre, String descripcion, Character estado) {
+    public LoteModel(long lot_codigo, long fin_codigo, String nombre, String descripcion) {
         this.lot_codigo = lot_codigo;
         this.fin_codigo = fin_codigo;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.estado = estado;
     }
 public LoteModel(){
 
@@ -52,11 +50,4 @@ public LoteModel(){
         this.descripcion = descripcion;
     }
 
-    public Character getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Character estado) {
-        this.estado = estado;
-    }
 }
