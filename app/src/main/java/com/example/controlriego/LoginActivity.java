@@ -9,6 +9,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.controlriego.Controllers.UsuarioController;
+import com.example.controlriego.Models.FincaModel;
+import com.example.controlriego.Models.GoteroModel;
+import com.example.controlriego.Models.GoterosLotesModel;
+import com.example.controlriego.Models.LoteModel;
 import com.example.controlriego.Models.Usuario;
 
 import java.util.ArrayList;
@@ -51,11 +55,15 @@ public class LoginActivity extends AppCompatActivity {
         String usuario=txtUsuario.getText().toString();
         String contrasena=txtContrasena.getText().toString();
         consumirServicio();
+
+        //Insertar en base
+
+
+        //DescargarData(); listas de consumir servicio
+
         usuariosConsulta = new ArrayList<Usuario>();
         usuarioController = new UsuarioController(this);
-        //fila=db.rawQuery("select usuario,contrasena from usuarios where usuario='"+usuario+"' and contrasena='"+contrasena+"'",null);
         usuariosConsulta = usuarioController.obtenerUsuarios(usuario, contrasena);
-                //preguntamos si el cursor tiene algun valor almacenado
            //preguntamos si los datos ingresados son iguales
         if (usuariosConsulta.size()>0){
             usuarioController.ActualizarUsuarioConectado(usuario, 1);
@@ -75,6 +83,14 @@ public class LoginActivity extends AppCompatActivity {
 
         ServicioTask servicioTask= new ServicioTask(this,"https://api.ofcorp.com.ec/users/login",username,password);
         servicioTask.execute();
+    }
+
+    public void DescargarData(ArrayList<FincaModel> fincas, ArrayList<LoteModel> lotes, ArrayList<GoteroModel> goteros, ArrayList<GoterosLotesModel> goterosLotes){
+        TransaccionesBDD transaccionesBDD = new TransaccionesBDD(getApplicationContext());
+        transaccionesBDD.InsertarFincas(fincas);
+        transaccionesBDD.InsertarLotes(lotes);
+        transaccionesBDD.InsertarGoteros(goteros);
+        transaccionesBDD.InsertarGoterosLotes(goterosLotes);
     }
 
 }

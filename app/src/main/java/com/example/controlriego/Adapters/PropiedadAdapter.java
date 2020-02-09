@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.controlriego.ControlActivity;
+import com.example.controlriego.Models.FincaModel;
 import com.example.controlriego.Models.PropiedadesModel;
 import com.example.controlriego.R;
 
@@ -20,13 +21,13 @@ import java.util.ArrayList;
 public class PropiedadAdapter extends BaseAdapter {
 
     Context context;
-    ArrayList<PropiedadesModel> listPropiedades = new ArrayList<>();
+    ArrayList<FincaModel> listPropiedades = new ArrayList<>();
     private static LayoutInflater inflater = null;
     TextView txtTituloPropiedad, txtSubtipo;
     ImageView imageView;
 
     @SuppressLint("MissingPermission")
-    public PropiedadAdapter(Context context, ArrayList<PropiedadesModel> listPropiedades) {
+    public PropiedadAdapter(Context context, ArrayList<FincaModel> listPropiedades) {
         this.context = context;
         this.listPropiedades = listPropiedades;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -55,13 +56,13 @@ public class PropiedadAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.propiedad_item,null);
         txtSubtipo = (TextView) view.findViewById(R.id.subtipo_item_atractivo);
 
-        txtSubtipo.setText(listPropiedades.get(position).getCategoria());
+        //txtSubtipo.setText(listPropiedades.get(position).getCategoria());
 
 
         txtTituloPropiedad = view.findViewById(R.id.titulo_item_atractivo);
         txtTituloPropiedad.setText(listPropiedades.get(position).getNombre());
         imageView = (ImageView) view.findViewById(R.id.imgView_item_atractivo);
-        Glide.with(context).load(listPropiedades.get(position).getPathImagen()).centerCrop().into(imageView);
+        //Glide.with(context).load(listPropiedades.get(position).getPathImagen()).centerCrop().into(imageView);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
