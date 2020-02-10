@@ -1,12 +1,9 @@
 package com.example.controlriego.Models;
 
-<<<<<<< HEAD
-import java.util.ArrayList;
 
-public class FincaModel{
-=======
+
 public class FincaModel {
->>>>>>> origin/master
+
     private long id_finca;
     private String nombre;
     private String descripcion;
