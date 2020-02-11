@@ -17,7 +17,7 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //TABLA USUARIO
         db.execSQL("create table usuarios(id integer primary key autoincrement,usuario text,contrasena text, estado_conexion INTEGER)");
-        //db.execSQL("insert into usuarios (usuario, contrasena, estado_conexion) values('ADMIN','ADMIN','0')");
+        db.execSQL("insert into usuarios (usuario, contrasena, estado_conexion) values('ADMIN','ADMIN','0')");
         //CREACION DE TABLAS
         db.execSQL("create table fincas(id_finca integer primary key,nombre text,descripcion text, imagen text)");
         db.execSQL("create table lotes(id_lote integer,id_finca integer,nombre text, descripcion text)");

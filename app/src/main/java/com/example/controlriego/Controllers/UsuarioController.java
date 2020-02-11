@@ -122,6 +122,6 @@ public class UsuarioController {
 
     public void RegistrarNuevoUsuario(String usuario, String password) {
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
-        baseDeDatos.execSQL("insert into usuarios values('"+usuario+"','"+password+"','0')");
+        baseDeDatos.execSQL("UPDATE '"+NOMBRE_TABLA+"' SET usuario='"+usuario+"', contrasena='"+password+"'  ");
     }
 }
