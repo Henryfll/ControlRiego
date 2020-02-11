@@ -96,16 +96,7 @@ public class LoginActivity extends AppCompatActivity{
         if (resultado=="406"){
 
         }else{
-            Gson gson = new Gson();
-            Type type = new TypeToken< ArrayList<UsuarioDto>>(){}.getType();
-            ArrayList<UsuarioDto>Respuesta=gson.fromJson(resultado, type);
-            UsuarioRespuesta=Respuesta.get(0);
-          /*  Usuario usuario= new Usuario();
-            usuario.setId(UsuarioRespuesta.getId_usuario());
-            usuario.setUsuario(username);
-            usuario.setContrasena(password);
-            System.out.println("usuario "+usuario.toString());
-            usuarioController.guardarCambios(usuario);*/
+            usuarioController.RegistrarNuevoUsuario(username,password);
         }
         if(UsuarioRespuesta!=null){
 

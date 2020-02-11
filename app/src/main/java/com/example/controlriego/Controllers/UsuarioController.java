@@ -114,13 +114,14 @@ public class UsuarioController {
 
     public void ActualizarUsuarioConectado(String usuarioEditado, int estado) {
         SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
-        /*ContentValues valoresParaActualizar = new ContentValues();
-        valoresParaActualizar.put("estado_conexion", estado);
-        String campoParaActualizar = "usuario = "+usuarioEditado;
-        baseDeDatos.update(NOMBRE_TABLA, valoresParaActualizar, campoParaActualizar, null);*/
         if(estado ==1)
             baseDeDatos.execSQL("UPDATE '"+NOMBRE_TABLA+"' SET estado_conexion='"+estado+"' WHERE usuario='"+usuarioEditado+"' ");
         else
             baseDeDatos.execSQL("UPDATE '"+NOMBRE_TABLA+"' SET estado_conexion='"+estado+"' WHERE usuario!='"+usuarioEditado+"' ");
+    }
+
+    public void RegistrarNuevoUsuario(String usuario, String password) {
+        SQLiteDatabase baseDeDatos = ayudanteBaseDeDatos.getWritableDatabase();
+        baseDeDatos.execSQL("insert into usuarios values('"+usuario+"','"+password+"','0')");
     }
 }
