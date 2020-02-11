@@ -2,36 +2,37 @@ package com.example.controlriego.Models;
 
 public class LoteModel {
 
-    private long lot_codigo; // El ID de la BD
-    private long fin_codigo;
+    private long id_lote; // El ID de la BD
+    private long id_finca;
     private String nombre;
     private String descripcion;
 
-    public LoteModel(long lot_codigo, long fin_codigo, String nombre, String descripcion) {
-        this.lot_codigo = lot_codigo;
-        this.fin_codigo = fin_codigo;
+    public LoteModel(long id_lote, long id_finca, String nombre, String descripcion) {
+        this.id_lote = id_lote;
+        this.id_finca = id_finca;
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
-public LoteModel(){
+
+    public LoteModel(){
 
 }
 
 
-    public long getLot_codigo() {
-        return lot_codigo;
+    public long getId_lote() {
+        return id_lote;
     }
 
-    public void setLot_codigo(long lot_codigo) {
-        this.lot_codigo = lot_codigo;
+    public void setId_lote(long id_lote) {
+        this.id_lote = id_lote;
     }
 
-    public long getFin_codigo() {
-        return fin_codigo;
+    public long getId_finca() {
+        return id_finca;
     }
 
-    public void setFin_codigo(long fin_codigo) {
-        this.fin_codigo = fin_codigo;
+    public void setId_finca(long id_finca) {
+        this.id_finca = id_finca;
     }
 
     public String getNombre() {

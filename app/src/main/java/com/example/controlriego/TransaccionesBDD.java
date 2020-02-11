@@ -79,10 +79,10 @@ public class TransaccionesBDD {
     public void InsertarLotes(ArrayList<LoteModel> lotes) {
         SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
         for (LoteModel item: lotes) {
-            if(consultaExisteLote(item.getLot_codigo()).size()==0){
+            if(consultaExisteLote(item.getId_lote()).size()==0){
                 db.execSQL("INSERT INTO lotes VALUES(" +
-                        item.getLot_codigo() + ",'" +
-                        item.getFin_codigo() + "','" +
+                        item.getId_lote() + ",'" +
+                        item.getId_finca() + "','" +
                         item.getNombre() + "','" +
                         item.getDescripcion() + "');");
             }
@@ -110,10 +110,10 @@ public class TransaccionesBDD {
         return lotesdeBDD;
     }
 
-    public ArrayList<LoteModel> consultarLotes(){
+        public ArrayList<LoteModel> consultarLotesbyID(long id_propiedad){
         ArrayList<LoteModel> lotesdeBDD = new ArrayList<LoteModel>();
         SQLiteDatabase bd = ayudanteBaseDeDatos.getReadableDatabase();
-        Cursor cursor=bd.rawQuery("select * from lotes ", null);
+        Cursor cursor=bd.rawQuery("select * from lotes where id_finca='"+id_propiedad+"'", null);
 
         if (cursor == null) return lotesdeBDD;
         if (!cursor.moveToFirst()) return lotesdeBDD;
@@ -134,9 +134,9 @@ public class TransaccionesBDD {
     public void InsertarGoteros(ArrayList<GoteroModel> goteros) {
         SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
         for (GoteroModel item: goteros) {
-            if(consultaExisteGotero(item.getGot_codigo()).size()==0){
+            if(consultaExisteGotero(item.getId_gotero()).size()==0){
                 db.execSQL("INSERT INTO goteros VALUES(" +
-                        item.getGot_codigo() + ",'" +
+                        item.getId_gotero() + ",'" +
                         item.getDescripcion() + "','" +
                         item.getLitro_hora() + "','" +
                         item.getEstado() + "');");

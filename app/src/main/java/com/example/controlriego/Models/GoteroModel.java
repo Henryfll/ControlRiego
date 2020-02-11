@@ -1,24 +1,24 @@
 package com.example.controlriego.Models;
 
 public class GoteroModel {
-    private long got_codigo; // El ID de la B
+    private long id_gotero; // El ID de la B
     private String descripcion;
     private double litro_hora;
     private String estado;
 
-    public GoteroModel(long got_codigo, String descripcion, double litro_hora, String estado) {
-        this.got_codigo = got_codigo;
+    public GoteroModel(long id_gotero, String descripcion, double litro_hora, String estado) {
+        this.id_gotero = id_gotero;
         this.descripcion = descripcion;
         this.litro_hora = litro_hora;
         this.estado = estado;
     }
 
-    public long getGot_codigo() {
-        return got_codigo;
+    public long getId_gotero() {
+        return id_gotero;
     }
 
-    public void setGot_codigo(long got_codigo) {
-        this.got_codigo = got_codigo;
+    public void setId_gotero(long id_gotero) {
+        this.id_gotero = id_gotero;
     }
 
     public String getDescripcion() {

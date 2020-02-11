@@ -67,7 +67,7 @@ public class Tab_control extends Fragment {
 
         TransaccionesBDD transaccion = new TransaccionesBDD(getContext());
 
-        listaLotes = transaccion.consultarLotes();
+        listaLotes = transaccion.consultarLotesbyID(idPropiedad);
 
         if(getContext()!= null) {
             listView.setAdapter(new LoteAdapter(getContext(),listaLotes));
