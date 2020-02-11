@@ -17,7 +17,7 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //TABLA USUARIO
         db.execSQL("create table usuarios(id integer primary key autoincrement,usuario text,contrasena text, estado_conexion INTEGER)");
-        db.execSQL("insert into usuarios (usuario, contrasena, estado_conexion) values('ADMIN','ADMIN','0')");
+        db.execSQL("insert into usuarios (usuario, contrasena, estado_conexion) values('ini','ini','0')");
         //CREACION DE TABLAS
         db.execSQL("create table fincas(id_finca integer primary key,nombre text,descripcion text, imagen text)");
         db.execSQL("create table lotes(id_lote integer,id_finca integer,nombre text, descripcion text)");
@@ -27,9 +27,13 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+        //TABLA USUARIO
         db.execSQL("create table usuarios(id integer primary key autoincrement,usuario text,contrasena text, estado_conexion INTEGER)");
-        db.execSQL("insert into usuarios (usuario, contrasena, estado_conexion) values('admin','admin','0')");
+        db.execSQL("insert into usuarios (usuario, contrasena, estado_conexion) values('ini','ini','0')");
         //CREACION DE TABLAS
-        db.execSQL("create table fincas(id_lote_gotero integer,id_lote integer,id_gotero integer, cantidad int)");
+        db.execSQL("create table fincas(id_finca integer primary key,nombre text,descripcion text, imagen text)");
+        db.execSQL("create table lotes(id_lote integer,id_finca integer,nombre text, descripcion text)");
+        db.execSQL("create table goteros(id_gotero integer,descripcion text,litro_hora real, estado text)");
+        db.execSQL("create table goteroslotes(id_lote_gotero integer,id_lote integer,id_gotero integer, cantidad int)");
     }
 }
