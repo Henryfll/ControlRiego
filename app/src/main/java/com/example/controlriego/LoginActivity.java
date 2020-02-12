@@ -178,6 +178,10 @@ public class LoginActivity extends AppCompatActivity{
                 goterosLote=gson.fromJson(resultado , founderListType);
             }
             //Guardar en la base
+            /*for (GoterosLotesModel item: goterosLote) {
+                System.out.println("Nombre: "+item.getId_lote_gotero());
+                System.out.println("NombreEs: "+item.getEstado_sinc());
+            }*/
             System.out.println("fincas "+fincas.size()+"lotes "+lotes.size()+"goteros "+goteros.size()+"goteroLote "+goterosLote.size());
             DescargarData(fincas,lotes,goteros,goterosLote);
         }

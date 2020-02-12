@@ -5,14 +5,16 @@ public class GoterosLotesModel {
     private long id_lote;
     private long id_gotero;
     private int cantidad;
+    private long estado_sinc;
 
     public GoterosLotesModel(){}
 
-    public GoterosLotesModel(long id_lote_gotero, long id_lote, long id_gotero, int cantidad) {
+    public GoterosLotesModel(long id_lote_gotero, long id_lote, long id_gotero, int cantidad, long estado_sinc) {
         this.id_lote_gotero = id_lote_gotero;
         this.id_lote = id_lote;
         this.id_gotero = id_gotero;
         this.cantidad = cantidad;
+        this.estado_sinc = estado_sinc;
     }
 
     public long getId_lote_gotero() {
@@ -45,5 +47,13 @@ public class GoterosLotesModel {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public long getEstado_sinc() {
+        return estado_sinc;
+    }
+
+    public void setEstado_sinc(long estado_sinc) {
+        this.estado_sinc = estado_sinc;
     }
 }
