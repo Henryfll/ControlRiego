@@ -163,10 +163,10 @@ public class TransaccionesBDD {
         return goterosdeBDD;
     }
 
-    public ArrayList<GoteroModel> consultarGoteros(){
+    public ArrayList<GoteroModel> consultarGoterosbyID(long id_gotero){
         ArrayList<GoteroModel> goterosdeBDD = new ArrayList<GoteroModel>();
         SQLiteDatabase bd = ayudanteBaseDeDatos.getReadableDatabase();
-        Cursor cursor=bd.rawQuery("select * from goteros ", null);
+        Cursor cursor=bd.rawQuery("select * from goteros where id_gotero='"+id_gotero+"' ", null);
         if (cursor == null) return goterosdeBDD;
         if (!cursor.moveToFirst()) return goterosdeBDD;
 
@@ -215,10 +215,10 @@ public class TransaccionesBDD {
         return listadeBDD;
     }
 
-    public ArrayList<GoterosLotesModel> consultarGoterosLotes(){
+    public ArrayList<GoterosLotesModel> consultarGoterosLotesbyIDLote(long id_lote){
         ArrayList<GoterosLotesModel> listadeBDD = new ArrayList<GoterosLotesModel>();
         SQLiteDatabase bd = ayudanteBaseDeDatos.getReadableDatabase();
-        Cursor cursor=bd.rawQuery("select * from goteroslotes ", null);
+        Cursor cursor=bd.rawQuery("select * from goteroslotes where id_lote='"+id_lote+"' ", null);
         if (cursor == null) return listadeBDD;
         if (!cursor.moveToFirst()) return listadeBDD;
 
