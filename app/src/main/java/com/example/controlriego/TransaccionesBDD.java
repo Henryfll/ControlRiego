@@ -238,12 +238,18 @@ public class TransaccionesBDD {
         return listadeBDD;
     }
 
-    public void actualizarGoterosLotesbyID(long id_lote_gotero, int cantidad){
+    public void actualizarCantidaddeGoterosLotes(long id_lote_gotero, int cantidad){
         SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
         if(consultaExisteFinca(id_lote_gotero).size()>0){
             db.execSQL("UPDATE goteroslotes SET cantidad='"+cantidad+"', estado_sinc=1 WHERE id_lote_gotero='"+id_lote_gotero+"'");
         }
     }
 
+    public void actualizarEstadoSyncdeGoterosLotes(long id_lote_gotero){
+        SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
+        if(consultaExisteFinca(id_lote_gotero).size()>0){
+            db.execSQL("UPDATE goteroslotes SET estado_sinc=0 WHERE id_lote_gotero='"+id_lote_gotero+"'");
+        }
+    }
 
 }
