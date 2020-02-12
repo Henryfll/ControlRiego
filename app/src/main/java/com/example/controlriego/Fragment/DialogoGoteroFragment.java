@@ -2,19 +2,29 @@ package com.example.controlriego.Fragment;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.controlriego.Adapters.GoteroLoteAdapter;
+import com.example.controlriego.Models.GoterosLotesModel;
 import com.example.controlriego.R;
+import com.example.controlriego.TransaccionesBDD;
+
+import java.util.ArrayList;
 
 public class DialogoGoteroFragment extends DialogFragment {
     private static final String TAG = "MyCustomDialog";
@@ -26,15 +36,34 @@ public class DialogoGoteroFragment extends DialogFragment {
 
     //widgets
 
+    private ListView listView; //  listview donde se cargaran la lista de atractivos
+
+    public ProgressBar progressBar; // Spinner indicador de la carga de atractivos
+
+    private SwipeRefreshLayout swipeContainer; // permite recargar los datos
+
+    public ArrayList<GoterosLotesModel> listaGoterosLote = new ArrayList<>(); // Array de atractivos
+
+
     private TextView mActionOk, mActionCancel;
 
 
     //vars
-/*
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_goteros, container, false);
+        getDialog().setTitle("Goteros por Lote");
+
+        listView = (ListView) view.findViewById(R.id.listViewGoterosLote);
+
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar_goterosLote);
+
+
+
+
+
         mActionCancel = view.findViewById(R.id.action_cancel);
         mActionOk = view.findViewById(R.id.action_ok);
 
@@ -58,7 +87,7 @@ public class DialogoGoteroFragment extends DialogFragment {
         });
 
         return view;
-    }*/
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -67,6 +96,22 @@ public class DialogoGoteroFragment extends DialogFragment {
             mOnInputListener = (OnInputListener) getActivity();
         }catch (ClassCastException e){
             Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ConsultarGoterosLote();
+
+    }
+
+    private void ConsultarGoterosLote() {
+        TransaccionesBDD transaccion = new TransaccionesBDD(getContext());
+        listaGoterosLote = transaccion.consultarGoterosLotesbyIDLote(1);
+        if(getContext()!= null) {
+            System.out.println("tamano "+listaGoterosLote.size());
+            listView.setAdapter(new GoteroLoteAdapter(getContext(),listaGoterosLote));
         }
     }
 }

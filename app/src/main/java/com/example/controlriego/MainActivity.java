@@ -92,7 +92,10 @@ public class MainActivity extends AppCompatActivity implements ListaPropiedadesF
         startActivity(intent);
 
     }
-
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
     @Override
     public void onDialogConfirmClick(DialogFragment dialog) {
 

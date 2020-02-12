@@ -72,6 +72,7 @@ public class LoginActivity extends AppCompatActivity{
         if (usuariosConsulta.size()>0){
             usuarioController.ActualizarUsuarioConectado(usuario, 1);
             Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
         else{
@@ -99,7 +100,9 @@ public class LoginActivity extends AppCompatActivity{
             Gson gson = new Gson();
             Type type = new TypeToken< ArrayList<UsuarioDto>>(){}.getType();
             ArrayList<UsuarioDto>Respuesta=gson.fromJson(resultado, type);
-            UsuarioRespuesta=Respuesta.get(0);
+            if(Respuesta!=null){
+                UsuarioRespuesta=Respuesta.get(0);
+            }
             UsuarioController usuarioRegistro = new UsuarioController(this);
             usuarioRegistro.RegistrarNuevoUsuario(username,password);
         }
