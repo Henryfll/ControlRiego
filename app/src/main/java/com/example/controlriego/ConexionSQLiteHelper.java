@@ -22,7 +22,7 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("create table fincas(id_finca integer primary key,nombre text,descripcion text, imagen text)");
         db.execSQL("create table lotes(id_lote integer,id_finca integer,nombre text, descripcion text)");
         db.execSQL("create table goteros(id_gotero integer,descripcion text,litro_hora real, estado text)");
-        db.execSQL("create table goteroslotes(id_lote_gotero integer,id_lote integer,id_gotero integer, cantidad int)");
+        db.execSQL("create table goteroslotes(id_lote_gotero integer,id_lote integer,id_gotero integer, cantidad int, estado_sinc text)");
     }
 
     @Override
@@ -34,6 +34,6 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("create table fincas(id_finca integer primary key,nombre text,descripcion text, imagen text)");
         db.execSQL("create table lotes(id_lote integer,id_finca integer,nombre text, descripcion text)");
         db.execSQL("create table goteros(id_gotero integer,descripcion text,litro_hora real, estado text)");
-        db.execSQL("create table goteroslotes(id_lote_gotero integer,id_lote integer,id_gotero integer, cantidad int)");
+        db.execSQL("create table goteroslotes(id_lote_gotero integer,id_lote integer,id_gotero integer, cantidad int, estado_sinc text)");
     }
 }

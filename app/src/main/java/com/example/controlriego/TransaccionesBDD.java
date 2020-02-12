@@ -110,7 +110,7 @@ public class TransaccionesBDD {
         return lotesdeBDD;
     }
 
-        public ArrayList<LoteModel> consultarLotesbyID(long id_propiedad){
+    public ArrayList<LoteModel> consultarLotesbyID(long id_propiedad){
         ArrayList<LoteModel> lotesdeBDD = new ArrayList<LoteModel>();
         SQLiteDatabase bd = ayudanteBaseDeDatos.getReadableDatabase();
         Cursor cursor=bd.rawQuery("select * from lotes where id_finca='"+id_propiedad+"'", null);
@@ -185,12 +185,13 @@ public class TransaccionesBDD {
     public void InsertarGoterosLotes(ArrayList<GoterosLotesModel> goteroslotes) {
         SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
         for (GoterosLotesModel item: goteroslotes) {
-            if(consultaExisteFinca(item.getId_lote_gotero()).size()==0){
+            if(consultaExisteGoterosLotes(item.getId_lote_gotero()).size()==0){
                 db.execSQL("INSERT INTO goteroslotes VALUES(" +
                         item.getId_lote_gotero() + ",'" +
                         item.getId_lote() + "','" +
                         item.getId_gotero() + "','" +
-                        item.getCantidad() + "');");
+                        item.getCantidad() + "','" +
+                        item.getEstado_sinc() + "');");
             }
         }
     }
@@ -206,7 +207,8 @@ public class TransaccionesBDD {
             GoterosLotesModel goteroslotesBDD = new GoterosLotesModel(cursor.getLong(0),
                     cursor.getLong(1),
                     cursor.getLong(2),
-                    cursor.getInt(3));
+                    cursor.getInt(3),
+                    cursor.getLong(4));
 
             listadeBDD.add(goteroslotesBDD);
         } while (cursor.moveToNext());
@@ -226,7 +228,8 @@ public class TransaccionesBDD {
             GoterosLotesModel goteroslotesBDD = new GoterosLotesModel(cursor.getLong(0),
                     cursor.getLong(1),
                     cursor.getLong(2),
-                    cursor.getInt(3));
+                    cursor.getInt(3),
+                    cursor.getLong(4));
 
             listadeBDD.add(goteroslotesBDD);
         } while (cursor.moveToNext());
@@ -235,5 +238,18 @@ public class TransaccionesBDD {
         return listadeBDD;
     }
 
+    public void actualizarCantidaddeGoterosLotes(long id_lote_gotero, int cantidad){
+        SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
+        if(consultaExisteFinca(id_lote_gotero).size()>0){
+            db.execSQL("UPDATE goteroslotes SET cantidad='"+cantidad+"', estado_sinc=1 WHERE id_lote_gotero='"+id_lote_gotero+"'");
+        }
+    }
+
+    public void actualizarEstadoSyncdeGoterosLotes(long id_lote_gotero){
+        SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
+        if(consultaExisteFinca(id_lote_gotero).size()>0){
+            db.execSQL("UPDATE goteroslotes SET estado_sinc=0 WHERE id_lote_gotero='"+id_lote_gotero+"'");
+        }
+    }
 
 }
