@@ -163,12 +163,13 @@ public class TransaccionesBDD {
         return goterosdeBDD;
     }
 
-    public ArrayList<GoteroModel> consultarGoterosbyID(long id_gotero){
+    public GoteroModel consultarGoterobyID(long id_gotero){
         ArrayList<GoteroModel> goterosdeBDD = new ArrayList<GoteroModel>();
+        GoteroModel goteroRetorno = new GoteroModel();
         SQLiteDatabase bd = ayudanteBaseDeDatos.getReadableDatabase();
         Cursor cursor=bd.rawQuery("select * from goteros where id_gotero='"+id_gotero+"' ", null);
-        if (cursor == null) return goterosdeBDD;
-        if (!cursor.moveToFirst()) return goterosdeBDD;
+        if (cursor == null) return goteroRetorno;
+        if (!cursor.moveToFirst()) return goteroRetorno;
 
         do {
             GoteroModel goterodeBDD = new GoteroModel(cursor.getLong(0),
@@ -179,7 +180,7 @@ public class TransaccionesBDD {
             goterosdeBDD.add(goterodeBDD);
         } while (cursor.moveToNext());
         cursor.close();
-        return goterosdeBDD;
+        return goterosdeBDD.get(0);
     }
 
     public void InsertarGoterosLotes(ArrayList<GoterosLotesModel> goteroslotes) {

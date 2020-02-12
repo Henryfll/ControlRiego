@@ -6,6 +6,8 @@ public class GoteroModel {
     private double litro_hora;
     private String estado;
 
+    public GoteroModel(){}
+
     public GoteroModel(long id_gotero, String descripcion, double litro_hora, String estado) {
         this.id_gotero = id_gotero;
         this.descripcion = descripcion;
