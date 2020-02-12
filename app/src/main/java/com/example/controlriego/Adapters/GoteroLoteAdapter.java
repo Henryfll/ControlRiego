@@ -1,18 +1,22 @@
 package com.example.controlriego.Adapters;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.controlriego.ControlActivity;
+import com.example.controlriego.Models.GoteroModel;
 import com.example.controlriego.Models.GoterosLotesModel;
 import com.example.controlriego.R;
+import com.example.controlriego.TransaccionesBDD;
 
 import java.util.ArrayList;
 
@@ -22,7 +26,7 @@ public class GoteroLoteAdapter extends BaseAdapter {
     ArrayList<GoterosLotesModel> listGoterosLote = new ArrayList<>();
     private static LayoutInflater inflater = null;
     TextView txtNombreGotero;
-    EditText txtGoterosLOte;
+    TextView txtGoterosLote;
 
 
     @SuppressLint("MissingPermission")
@@ -53,14 +57,50 @@ public class GoteroLoteAdapter extends BaseAdapter {
         if(view == null)
             view = inflater.inflate(R.layout.goterolote_item,null);
 
-
+        TransaccionesBDD transaccion = new TransaccionesBDD(context);
+        GoteroModel gotero=transaccion.consultarGoterobyID(listGoterosLote.get(position).getId_gotero());
 
         txtNombreGotero = view.findViewById(R.id.nombre_item_gotero);
-        txtNombreGotero.setText(listGoterosLote.get(position).getId_gotero()+"-");
+        txtNombreGotero.setText(gotero.getDescripcion()+":");
 
-       txtGoterosLOte = view.findViewById(R.id.gotero_num);
-       txtGoterosLOte.setText(listGoterosLote.get(position).getCantidad());
+       txtGoterosLote = view.findViewById(R.id.gotero_num);
+        String value=Integer.toString(listGoterosLote.get(position).getCantidad());
+       txtGoterosLote.setText("N:"+value);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEditDialog(position);
+
+            }
+        });
         return view;
+    }
+    private void showEditDialog(final int position){
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.edit_dialog);
+
+        //Bind dialog views
+        final EditText renameEdittext=(EditText)dialog.findViewById(R.id.rename_edittext);
+        final Button renameButton=(Button)dialog.findViewById(R.id.rename_button);
+
+
+        //Set clicked album name to rename edittext
+        String value=Integer.toString(listGoterosLote.get(position).getCantidad());
+        renameEdittext.setText(value);
+
+        //When rename button is clicked, first rename edittext should be checked if it is empty
+        //If it is not empty, data and listview item should be changed.
+        renameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+        dialog.show();
     }
 }
 

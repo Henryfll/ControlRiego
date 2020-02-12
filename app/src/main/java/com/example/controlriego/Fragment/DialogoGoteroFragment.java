@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class DialogoGoteroFragment extends DialogFragment {
     private static final String TAG = "MyCustomDialog";
-
+    private long idLote;
     public interface OnInputListener{
         void sendInput(String input);
     }
@@ -102,15 +102,17 @@ public class DialogoGoteroFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
+        if (getArguments() != null) {
+            idLote = getArguments().getLong("idLote");
+        }
         ConsultarGoterosLote();
 
     }
 
     private void ConsultarGoterosLote() {
         TransaccionesBDD transaccion = new TransaccionesBDD(getContext());
-        listaGoterosLote = transaccion.consultarGoterosLotesbyIDLote(1);
+        listaGoterosLote = transaccion.consultarGoterosLotesbyIDLote(idLote);
         if(getContext()!= null) {
-            System.out.println("tamano "+listaGoterosLote.size());
             listView.setAdapter(new GoteroLoteAdapter(getContext(),listaGoterosLote));
         }
     }

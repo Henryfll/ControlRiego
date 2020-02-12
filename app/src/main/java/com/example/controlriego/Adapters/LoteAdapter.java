@@ -3,6 +3,7 @@ package com.example.controlriego.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -67,6 +68,9 @@ public class LoteAdapter extends BaseAdapter {
                 FragmentActivity activity = (FragmentActivity)(context);
                 FragmentManager fm = activity.getSupportFragmentManager();
                 DialogoGoteroFragment dialog = new DialogoGoteroFragment();
+                Bundle bundle = new Bundle();
+                bundle.putLong("idLote", listLotes.get(position).getId_lote());
+                dialog.setArguments(bundle);
                 dialog.show(fm, "MyCustomDialog");
             }
         });
