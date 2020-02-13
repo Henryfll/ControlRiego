@@ -49,7 +49,6 @@ public class TransaccionesBDD {
             fincasdeBDD.add(fincadeBDD);
         } while (cursor.moveToNext());
         cursor.close();
-        bd.close();
         return fincasdeBDD;
     }
 
@@ -71,7 +70,6 @@ public class TransaccionesBDD {
         } while (cursor.moveToNext());
 
         cursor.close();
-        bd.close();
         return fincasdeBDD;
     }
 
@@ -107,7 +105,6 @@ public class TransaccionesBDD {
         } while (cursor.moveToNext());
 
         cursor.close();
-        bd.close();
         return lotesdeBDD;
     }
 
@@ -129,7 +126,6 @@ public class TransaccionesBDD {
         } while (cursor.moveToNext());
 
         cursor.close();
-        bd.close();
         return lotesdeBDD;
     }
 
@@ -163,7 +159,6 @@ public class TransaccionesBDD {
             goterosdeBDD.add(goterodeBDD);
         } while (cursor.moveToNext());
         cursor.close();
-        bd.close();
         return goterosdeBDD;
     }
 
@@ -184,7 +179,6 @@ public class TransaccionesBDD {
             goterosdeBDD.add(goterodeBDD);
         } while (cursor.moveToNext());
         cursor.close();
-        bd.close();
         return goterosdeBDD.get(0);
     }
 
@@ -221,7 +215,6 @@ public class TransaccionesBDD {
         } while (cursor.moveToNext());
 
         cursor.close();
-        bd.close();
         return listadeBDD;
     }
 
@@ -243,13 +236,12 @@ public class TransaccionesBDD {
         } while (cursor.moveToNext());
 
         cursor.close();
-        bd.close();
         return listadeBDD;
     }
 
     public void actualizarCantidaddeGoterosLotes(long id_lote_gotero, int cantidad){
         SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
-        if(consultaExisteFinca(id_lote_gotero).size()>0){
+        if(consultaExisteGoterosLotes(id_lote_gotero).size()>0){
             db.execSQL("UPDATE goteroslotes SET cantidad='"+cantidad+"', estado_sinc=1 WHERE id_lote_gotero='"+id_lote_gotero+"'");
         }
         db.close();
@@ -296,7 +288,6 @@ public class TransaccionesBDD {
             registrosBDD.add(registroBDD);
         } while (cursor.moveToNext());
         cursor.close();
-        db.close();
         return registrosBDD;
     }
 
