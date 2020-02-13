@@ -12,12 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:padding="10dp">
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="56dp"
-            android:id="@+id/srlContainer"
-            >
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -53,11 +48,11 @@
                 </RelativeLayout>
             </LinearLayout>
 
-        </android.support.v4.widget.SwipeRefreshLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OK"
+            android:text="CERRAR"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
@@ -65,16 +60,6 @@
             android:textColor="#33bbff"
             android:id="@+id/action_ok"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CANCEL"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginRight="20dp"
-            android:textSize="18sp"
-            android:textColor="#33bbff"
-            android:id="@+id/action_cancel"/>
 
     </RelativeLayout>
 

@@ -11,8 +11,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.controlriego.ControlActivity;
+import com.example.controlriego.Fragment.DialogoGoteroFragment;
 import com.example.controlriego.Models.GoteroModel;
 import com.example.controlriego.Models.GoterosLotesModel;
 import com.example.controlriego.R;
@@ -83,7 +85,7 @@ public class GoteroLoteAdapter extends BaseAdapter {
 
         //Bind dialog views
         final EditText renameEdittext=(EditText)dialog.findViewById(R.id.rename_edittext);
-        final Button renameButton=(Button)dialog.findViewById(R.id.rename_button);
+        final Button btn_actualizar=(Button)dialog.findViewById(R.id.btn_actualizar_goteroLote);
 
 
         //Set clicked album name to rename edittext
@@ -92,9 +94,28 @@ public class GoteroLoteAdapter extends BaseAdapter {
 
         //When rename button is clicked, first rename edittext should be checked if it is empty
         //If it is not empty, data and listview item should be changed.
-        renameButton.setOnClickListener(new View.OnClickListener() {
+        btn_actualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TransaccionesBDD transaccion = new TransaccionesBDD(context);
+                int nuevoValor=Integer.parseInt(String.valueOf(renameEdittext.getText()));
+                //System.out.println("idGL: "+listGoterosLote.get(position).getId_lote_gotero()+" valor: "+nuevoValor);
+                try {
+                    transaccion.actualizarCantidaddeGoterosLotes(listGoterosLote.get(position).getId_lote_gotero(),nuevoValor);
+                   // ArrayList<GoterosLotesModel> gotL=transaccion.consultaExisteGoterosLotes(listGoterosLote.get(position).getId_lote_gotero());
+                    GoterosLotesModel gl=listGoterosLote.get(position);
+                    listGoterosLote.clear();
+
+                    listGoterosLote.addAll( transaccion.consultarGoterosLotesbyIDLote(gl.getId_lote()));
+
+                    notifyDataSetChanged();
+                    Toast.makeText(context,"Gotero Actualizado!",Toast.LENGTH_LONG).show();
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(context,"Error al Actualizar!",Toast.LENGTH_LONG).show();
+                }
+
                 dialog.dismiss();
             }
         });

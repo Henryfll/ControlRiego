@@ -45,7 +45,7 @@ public class DialogoGoteroFragment extends DialogFragment {
     public ArrayList<GoterosLotesModel> listaGoterosLote = new ArrayList<>(); // Array de atractivos
 
 
-    private TextView mActionOk, mActionCancel;
+    private TextView mActionOk;
 
 
     //vars
@@ -60,22 +60,7 @@ public class DialogoGoteroFragment extends DialogFragment {
 
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar_goterosLote);
 
-
-
-
-
-        mActionCancel = view.findViewById(R.id.action_cancel);
         mActionOk = view.findViewById(R.id.action_ok);
-
-
-        mActionCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: closing dialog");
-                getDialog().dismiss();
-            }
-        });
-
 
         mActionOk.setOnClickListener(new View.OnClickListener() {
             @Override
