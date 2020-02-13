@@ -64,7 +64,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/milimetros_cubicos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -79,7 +79,7 @@
 
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btn_guardarLluvia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

@@ -32,7 +32,7 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
                 return tab_control;
             case 1:
                 Tab_lluvia tab_lluvia= new Tab_lluvia();
-               // tab_lluvia.keyatractivo = this.keyAtractivo;
+                tab_lluvia.idPropiedad = this.idPropiedad;
                 return tab_lluvia;
             default:
                 return null;

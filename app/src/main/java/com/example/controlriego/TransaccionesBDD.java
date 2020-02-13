@@ -8,16 +8,12 @@ import com.example.controlriego.Models.FincaModel;
 import com.example.controlriego.Models.GoteroModel;
 import com.example.controlriego.Models.GoterosLotesModel;
 import com.example.controlriego.Models.LoteModel;
+import com.example.controlriego.Models.RegistroLluviaModel;
 
 import java.util.ArrayList;
 
 public class TransaccionesBDD {
     private ConexionSQLiteHelper ayudanteBaseDeDatos;
-    private String TABLA_USUARIOS = "usuarios";
-    private String TABLA_FINCAS = "fincas";
-    private String TABLA_LOTES = "lotes";
-    private String TABLA_GOTEROS = "goteros";
-    private String TABLA_GOTEROSLOTE = "goteroslote";
 
     public TransaccionesBDD(Context contexto) {
         ayudanteBaseDeDatos = new ConexionSQLiteHelper(contexto,"bd_controlriego",null,1);
@@ -34,6 +30,7 @@ public class TransaccionesBDD {
                         item.getImagen() + "');");
             }
         }
+        db.close();
     }
 
     public ArrayList<FincaModel> consultaExisteFinca(long id){
@@ -52,6 +49,7 @@ public class TransaccionesBDD {
             fincasdeBDD.add(fincadeBDD);
         } while (cursor.moveToNext());
         cursor.close();
+        bd.close();
         return fincasdeBDD;
     }
 
@@ -73,6 +71,7 @@ public class TransaccionesBDD {
         } while (cursor.moveToNext());
 
         cursor.close();
+        bd.close();
         return fincasdeBDD;
     }
 
@@ -87,6 +86,7 @@ public class TransaccionesBDD {
                         item.getDescripcion() + "');");
             }
         }
+        db.close();
     }
 
     public ArrayList<LoteModel> consultaExisteLote(long id){
@@ -107,6 +107,7 @@ public class TransaccionesBDD {
         } while (cursor.moveToNext());
 
         cursor.close();
+        bd.close();
         return lotesdeBDD;
     }
 
@@ -128,6 +129,7 @@ public class TransaccionesBDD {
         } while (cursor.moveToNext());
 
         cursor.close();
+        bd.close();
         return lotesdeBDD;
     }
 
@@ -142,6 +144,7 @@ public class TransaccionesBDD {
                         item.getEstado() + "');");
             }
         }
+        db.close();
     }
 
     public ArrayList<GoteroModel> consultaExisteGotero(long id){
@@ -160,6 +163,7 @@ public class TransaccionesBDD {
             goterosdeBDD.add(goterodeBDD);
         } while (cursor.moveToNext());
         cursor.close();
+        bd.close();
         return goterosdeBDD;
     }
 
@@ -180,6 +184,7 @@ public class TransaccionesBDD {
             goterosdeBDD.add(goterodeBDD);
         } while (cursor.moveToNext());
         cursor.close();
+        bd.close();
         return goterosdeBDD.get(0);
     }
 
@@ -195,6 +200,7 @@ public class TransaccionesBDD {
                         item.getEstado_sinc() + "');");
             }
         }
+        db.close();
     }
 
     public ArrayList<GoterosLotesModel> consultaExisteGoterosLotes(long id){
@@ -215,6 +221,7 @@ public class TransaccionesBDD {
         } while (cursor.moveToNext());
 
         cursor.close();
+        bd.close();
         return listadeBDD;
     }
 
@@ -236,6 +243,7 @@ public class TransaccionesBDD {
         } while (cursor.moveToNext());
 
         cursor.close();
+        bd.close();
         return listadeBDD;
     }
 
@@ -244,6 +252,7 @@ public class TransaccionesBDD {
         if(consultaExisteFinca(id_lote_gotero).size()>0){
             db.execSQL("UPDATE goteroslotes SET cantidad='"+cantidad+"', estado_sinc=1 WHERE id_lote_gotero='"+id_lote_gotero+"'");
         }
+        db.close();
     }
 
     public void actualizarEstadoSyncdeGoterosLotes(long id_lote_gotero){
@@ -251,6 +260,44 @@ public class TransaccionesBDD {
         if(consultaExisteFinca(id_lote_gotero).size()>0){
             db.execSQL("UPDATE goteroslotes SET estado_sinc=0 WHERE id_lote_gotero='"+id_lote_gotero+"'");
         }
+        db.close();
+    }
+
+    public boolean registrarLluvia(RegistroLluviaModel registroLluvia){
+        if(existeRegistroLluviabyFecha(registroLluvia.getId_finca(), registroLluvia.getFecha_lluvia()).size()>0){
+            return false;
+        } else{
+            SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
+            db.execSQL("INSERT INTO registro_lluvia(id_finca, fecha_lluvia, milimetro_cubico, estado, id_usu_create, fecha_creacion, id_usu_update, fecha_update, estado_sinc) VALUES(" +
+                    registroLluvia.getId_finca() + ",'" +
+                    registroLluvia.getFecha_lluvia() + "'," +
+                    registroLluvia.getMilimetro_cubico() + ",'" +
+                    registroLluvia.getEstado() + "'," +
+                    registroLluvia.getId_usu_create() + ",'" +
+                    registroLluvia.getFecha_creacion() + "'," +
+                    registroLluvia.getId_usu_update() + ",'" +
+                    registroLluvia.getFecha_update() + "','" +
+                    registroLluvia.getEstado_sinc() + "');");
+            db.close();
+            return true;
+        }
+    }
+
+    public ArrayList<RegistroLluviaModel> existeRegistroLluviabyFecha(long id_finca, String fecha_lluvia){
+        ArrayList<RegistroLluviaModel> registrosBDD = new ArrayList<RegistroLluviaModel>();
+        SQLiteDatabase db = ayudanteBaseDeDatos.getReadableDatabase();
+        Cursor cursor=db.rawQuery("select * from registro_lluvia where fecha_lluvia='"+fecha_lluvia+"' and id_finca='"+id_finca+"'", null);
+        if (cursor == null) return registrosBDD;
+        if (!cursor.moveToFirst()) return registrosBDD;
+
+        do {
+            RegistroLluviaModel registroBDD = new RegistroLluviaModel(cursor.getLong(0),
+                    cursor.getString(3));
+            registrosBDD.add(registroBDD);
+        } while (cursor.moveToNext());
+        cursor.close();
+        db.close();
+        return registrosBDD;
     }
 
 }
