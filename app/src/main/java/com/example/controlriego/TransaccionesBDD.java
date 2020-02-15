@@ -4,11 +4,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.controlriego.Models.DetalleRiegoModel;
 import com.example.controlriego.Models.FincaModel;
 import com.example.controlriego.Models.GoteroModel;
 import com.example.controlriego.Models.GoterosLotesModel;
 import com.example.controlriego.Models.LoteModel;
 import com.example.controlriego.Models.RegistroLluviaModel;
+import com.example.controlriego.Models.RiegoModel;
 
 import java.util.ArrayList;
 
@@ -19,6 +21,7 @@ public class TransaccionesBDD {
         ayudanteBaseDeDatos = new ConexionSQLiteHelper(contexto,"bd_controlriego",null,1);
     }
 
+    //FINCAS
     public void InsertarFincas(ArrayList<FincaModel> fincas) {
         SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
         for (FincaModel item: fincas) {
@@ -73,6 +76,7 @@ public class TransaccionesBDD {
         return fincasdeBDD;
     }
 
+    //LOTES
     public void InsertarLotes(ArrayList<LoteModel> lotes) {
         SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
         for (LoteModel item: lotes) {
@@ -81,7 +85,8 @@ public class TransaccionesBDD {
                         item.getId_lote() + ",'" +
                         item.getId_finca() + "','" +
                         item.getNombre() + "','" +
-                        item.getDescripcion() + "');");
+                        item.getDescripcion() + "','" +
+                        item.getEstado_gotero() + "');");
             }
         }
         db.close();
@@ -120,7 +125,8 @@ public class TransaccionesBDD {
             LoteModel lotedeBDD = new LoteModel(cursor.getLong(0),
                     cursor.getLong(1),
                     cursor.getString(2),
-                    cursor.getString(3));
+                    cursor.getString(3),
+                    cursor.getLong(4));
 
             lotesdeBDD.add(lotedeBDD);
         } while (cursor.moveToNext());
@@ -129,6 +135,13 @@ public class TransaccionesBDD {
         return lotesdeBDD;
     }
 
+    public void actualizarEstadoGoteroLote(long id_lote, String estado_lote) {
+        SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
+        db.execSQL("UPDATE lotes SET estado_gotero='"+estado_lote+"' WHERE id_lote='"+id_lote+"'");
+        db.close();
+    }
+
+    //GOTEROS
     public void InsertarGoteros(ArrayList<GoteroModel> goteros) {
         SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
         for (GoteroModel item: goteros) {
@@ -182,6 +195,7 @@ public class TransaccionesBDD {
         return goterosdeBDD.get(0);
     }
 
+    //GOTEROS-LOTES
     public void InsertarGoterosLotes(ArrayList<GoterosLotesModel> goteroslotes) {
         SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
         for (GoterosLotesModel item: goteroslotes) {
@@ -247,14 +261,7 @@ public class TransaccionesBDD {
         db.close();
     }
 
-    public void actualizarEstadoSyncdeGoterosLotes(long id_lote_gotero){
-        SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
-        if(consultaExisteFinca(id_lote_gotero).size()>0){
-            db.execSQL("UPDATE goteroslotes SET estado_sinc=0 WHERE id_lote_gotero='"+id_lote_gotero+"'");
-        }
-        db.close();
-    }
-
+    //REGISTRO LLUVIA
     public boolean registrarLluvia(RegistroLluviaModel registroLluvia){
         if(existeRegistroLluviabyFecha(registroLluvia.getId_finca(), registroLluvia.getFecha_lluvia()).size()>0){
             return false;
@@ -289,6 +296,102 @@ public class TransaccionesBDD {
         } while (cursor.moveToNext());
         cursor.close();
         return registrosBDD;
+    }
+
+    //RIEGO
+    public void InsertarRiego(RiegoModel riego) {
+        SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
+        db.execSQL("INSERT INTO riego (id_lote, fecha_inicio, fecha_fin, estado, id_usu_create, fecha_create, id_usu_update, fecha_update, estado_sinc) VALUES(" +
+                    riego.getId_lote() + ",'" +
+                    riego.getFecha_inicio() + "','" +
+                    riego.getFecha_fin() + "','" +
+                    riego.getEstado() + "'," +
+                    riego.getId_usu_create() + ",'" +
+                    riego.getFecha_create() + "'," +
+                    riego.getId_usu_update() + ",'" +
+                    riego.getFecha_update() + "','" +
+                    riego.getEstado_sinc() + "');");
+
+        db.close();
+    }
+
+    public ArrayList<RiegoModel> consultaRiegos(){
+        ArrayList<RiegoModel> listadeBDD = new ArrayList<RiegoModel>();
+        SQLiteDatabase bd = ayudanteBaseDeDatos.getReadableDatabase();
+        Cursor cursor=bd.rawQuery("select * from riego ", null);
+        if (cursor == null) return listadeBDD;
+        if (!cursor.moveToFirst()) return listadeBDD;
+
+        do {
+            RiegoModel riegoBDD = new RiegoModel(
+                    cursor.getLong(0),
+                    cursor.getLong(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getLong(4),
+                    cursor.getLong(5),
+                    cursor.getString(6),
+                    cursor.getLong(7),
+                    cursor.getString(8),
+                    cursor.getLong(9));
+
+            listadeBDD.add(riegoBDD);
+        } while (cursor.moveToNext());
+
+        cursor.close();
+        return listadeBDD;
+    }
+
+    //DETALLE-RIEGO
+    public void InsertarDetalleRiego(DetalleRiegoModel detalleRiego) {
+        SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
+        db.execSQL("INSERT INTO detalleriego (id_riego, id_lote_gotero, cantidad, estado, id_usu_create, fecha_create, id_usu_update, fecha_update, estado_sinc) VALUES(" +
+                detalleRiego.getId_riego() + "," +
+                detalleRiego.getId_lote_gotero() + "," +
+                detalleRiego.getCantidad() + "," +
+                detalleRiego.getEstado() + "," +
+                detalleRiego.getId_usu_create() + ",'" +
+                detalleRiego.getFecha_create() + "'," +
+                detalleRiego.getId_usu_update() + ",'" +
+                detalleRiego.getFecha_update() + "','" +
+                detalleRiego.getEstado_sinc() + "');");
+        db.close();
+    }
+
+    public ArrayList<DetalleRiegoModel> consultaDetalleRiegos(){
+        ArrayList<DetalleRiegoModel> listadeBDD = new ArrayList<DetalleRiegoModel>();
+        SQLiteDatabase bd = ayudanteBaseDeDatos.getReadableDatabase();
+        Cursor cursor=bd.rawQuery("select * from detalleriego ", null);
+        if (cursor == null) return listadeBDD;
+        if (!cursor.moveToFirst()) return listadeBDD;
+
+        do {
+            DetalleRiegoModel detalleriegoBDD = new DetalleRiegoModel(
+                    cursor.getLong(0),
+                    cursor.getLong(1),
+                    cursor.getLong(2),
+                    cursor.getInt(3),
+                    cursor.getLong(4),
+                    cursor.getLong(5),
+                    cursor.getString(6),
+                    cursor.getLong(7),
+                    cursor.getString(8),
+                    cursor.getLong(9));
+
+            listadeBDD.add(detalleriegoBDD);
+        } while (cursor.moveToNext());
+
+        cursor.close();
+        return listadeBDD;
+    }
+
+    //Para la sincronizacion
+    public void actualizarEstadoSyncdeGoterosLotes(long id_lote_gotero){
+        SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
+        if(consultaExisteFinca(id_lote_gotero).size()>0){
+            db.execSQL("UPDATE goteroslotes SET estado_sinc=0 WHERE id_lote_gotero='"+id_lote_gotero+"'");
+        }
+        db.close();
     }
 
 }

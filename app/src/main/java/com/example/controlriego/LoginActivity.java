@@ -9,10 +9,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.controlriego.Controllers.UsuarioController;
+import com.example.controlriego.Models.DetalleRiegoModel;
 import com.example.controlriego.Models.FincaModel;
 import com.example.controlriego.Models.GoteroModel;
 import com.example.controlriego.Models.GoterosLotesModel;
 import com.example.controlriego.Models.LoteModel;
+import com.example.controlriego.Models.RiegoModel;
 import com.example.controlriego.Models.Usuario;
 import com.example.controlriego.Models.UsuarioDto;
 import com.google.gson.Gson;
@@ -187,6 +189,59 @@ public class LoginActivity extends AppCompatActivity{
             }*/
             System.out.println("fincas "+fincas.size()+"lotes "+lotes.size()+"goteros "+goteros.size()+"goteroLote "+goterosLote.size());
             DescargarData(fincas,lotes,goteros,goterosLote);
+
+            //Prueba de Insert Riego y detalle-riego
+            /*RiegoModel riego1 = new RiegoModel();
+            riego1.setId_lote(1);
+            riego1.setFecha_inicio("15/2/2020");
+            riego1.setFecha_fin("16/2/2020");
+            riego1.setEstado(1);
+            riego1.setId_usu_create(1);
+            riego1.setFecha_create("15/2/2020");
+            riego1.setEstado_sinc(0);
+
+            RiegoModel riego2 = new RiegoModel();
+            riego2.setId_lote(2);
+            riego2.setFecha_inicio("17/2/2020");
+            riego2.setFecha_fin("18/2/2020");
+            riego2.setEstado(1);
+            riego2.setId_usu_create(1);
+            riego2.setFecha_create("17/2/2020");
+            riego2.setEstado_sinc(0);
+
+            DetalleRiegoModel detaRiego1 = new DetalleRiegoModel();
+            detaRiego1.setId_riego(1);
+            detaRiego1.setId_lote_gotero(1);
+            detaRiego1.setCantidad(2);
+            detaRiego1.setEstado(1);
+            detaRiego1.setId_usu_create(1);
+            detaRiego1.setFecha_create("15/2/2020");
+            detaRiego1.setEstado_sinc(0);
+
+            DetalleRiegoModel detaRiego2 = new DetalleRiegoModel();
+            detaRiego2.setId_riego(2);
+            detaRiego2.setId_lote_gotero(2);
+            detaRiego2.setCantidad(2);
+            detaRiego2.setEstado(1);
+            detaRiego2.setId_usu_create(1);
+            detaRiego2.setFecha_create("17/2/2020");
+            detaRiego2.setEstado_sinc(0);
+
+            TransaccionesBDD tran = new TransaccionesBDD(this);
+            tran.InsertarRiego(riego1);
+            tran.InsertarRiego(riego2);
+            tran.InsertarDetalleRiego(detaRiego1);
+            tran.InsertarDetalleRiego(detaRiego2);
+            //Prueba desde base
+            for (RiegoModel item: tran.consultaRiegos()) {
+                System.out.println("Nombre: "+item.getId_riego());
+                System.out.println("NombreEs: "+item.getFecha_inicio());
+            }
+            for (DetalleRiegoModel item: tran.consultaDetalleRiegos()) {
+                System.out.println("Nombre: "+item.getId_detalle_riego());
+                System.out.println("NombreEs: "+item.getFecha_create());
+            }*/
+
         }
 
 
