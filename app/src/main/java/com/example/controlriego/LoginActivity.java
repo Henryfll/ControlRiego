@@ -241,7 +241,6 @@ public class LoginActivity extends AppCompatActivity{
                 System.out.println("Nombre: "+item.getId_detalle_riego());
                 System.out.println("NombreEs: "+item.getFecha_create());
             }*/
-
         }
 
 
