@@ -232,10 +232,11 @@ public class LoginActivity extends AppCompatActivity{
             tran.InsertarRiego(riego2);
             tran.InsertarDetalleRiego(detaRiego1);
             tran.InsertarDetalleRiego(detaRiego2);
+            tran.actualizarFechaFinRiego(1, "19/2/2020");
             //Prueba desde base
             for (RiegoModel item: tran.consultaRiegos()) {
                 System.out.println("Nombre: "+item.getId_riego());
-                System.out.println("NombreEs: "+item.getFecha_inicio());
+                System.out.println("NombreEs: "+item.getFecha_fin());
             }
             for (DetalleRiegoModel item: tran.consultaDetalleRiegos()) {
                 System.out.println("Nombre: "+item.getId_detalle_riego());

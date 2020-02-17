@@ -302,16 +302,22 @@ public class TransaccionesBDD {
     public void InsertarRiego(RiegoModel riego) {
         SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
         db.execSQL("INSERT INTO riego (id_lote, fecha_inicio, fecha_fin, estado, id_usu_create, fecha_create, id_usu_update, fecha_update, estado_sinc) VALUES(" +
-                    riego.getId_lote() + ",'" +
-                    riego.getFecha_inicio() + "','" +
-                    riego.getFecha_fin() + "','" +
-                    riego.getEstado() + "'," +
-                    riego.getId_usu_create() + ",'" +
-                    riego.getFecha_create() + "'," +
-                    riego.getId_usu_update() + ",'" +
-                    riego.getFecha_update() + "','" +
-                    riego.getEstado_sinc() + "');");
+                riego.getId_lote() + ",'" +
+                riego.getFecha_inicio() + "','" +
+                riego.getFecha_fin() + "','" +
+                riego.getEstado() + "'," +
+                riego.getId_usu_create() + ",'" +
+                riego.getFecha_create() + "'," +
+                riego.getId_usu_update() + ",'" +
+                riego.getFecha_update() + "','" +
+                riego.getEstado_sinc() + "');");
 
+        db.close();
+    }
+
+    public void actualizarFechaFinRiego(long id_riego, String fecha_fin) {
+        SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
+        db.execSQL("UPDATE riego SET fecha_fin='"+fecha_fin+"' WHERE id_riego='"+id_riego+"'");
         db.close();
     }
 
