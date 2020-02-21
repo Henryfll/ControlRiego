@@ -191,7 +191,7 @@ public class LoginActivity extends AppCompatActivity{
             DescargarData(fincas,lotes,goteros,goterosLote);
 
             //Prueba de Insert Riego y detalle-riego
-            /*RiegoModel riego1 = new RiegoModel();
+            RiegoModel riego1 = new RiegoModel();
             riego1.setId_lote(1);
             riego1.setFecha_inicio("15/2/2020");
             riego1.setFecha_fin("16/2/2020");
@@ -203,7 +203,7 @@ public class LoginActivity extends AppCompatActivity{
             RiegoModel riego2 = new RiegoModel();
             riego2.setId_lote(2);
             riego2.setFecha_inicio("17/2/2020");
-            riego2.setFecha_fin("18/2/2020");
+            //riego2.setFecha_fin("18/2/2020");
             riego2.setEstado(1);
             riego2.setId_usu_create(1);
             riego2.setFecha_create("17/2/2020");
@@ -232,9 +232,11 @@ public class LoginActivity extends AppCompatActivity{
             tran.InsertarRiego(riego2);
             tran.InsertarDetalleRiego(detaRiego1);
             tran.InsertarDetalleRiego(detaRiego2);
-            tran.actualizarFechaFinRiego(1, "19/2/2020");
+            System.out.println("Nombre: "+tran.consultaRiegobyIDLote(1).getId_riego());
+            System.out.println("Nombre: "+tran.consultaRiegobyIDLote(2).getId_riego());
+            //tran.actualizarFechaFinRiego(1, "19/2/2020");
             //Prueba desde base
-            for (RiegoModel item: tran.consultaRiegos()) {
+            /*for (RiegoModel item: tran.consultaRiegos()) {
                 System.out.println("Nombre: "+item.getId_riego());
                 System.out.println("NombreEs: "+item.getFecha_fin());
             }

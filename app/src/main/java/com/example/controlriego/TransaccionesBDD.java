@@ -321,6 +321,33 @@ public class TransaccionesBDD {
         db.close();
     }
 
+    public RiegoModel consultaRiegobyIDLote(long id_lote){
+        ArrayList<RiegoModel> listadeBDD = new ArrayList<RiegoModel>();
+        RiegoModel riegoBDD = new RiegoModel();
+        SQLiteDatabase bd = ayudanteBaseDeDatos.getReadableDatabase();
+        Cursor cursor=bd.rawQuery("select * from riego where id_lote='"+id_lote+"' and fecha_fin='null' ", null);
+        if (cursor == null) return riegoBDD;
+        if (!cursor.moveToFirst()) return riegoBDD;
+
+        do {
+            riegoBDD = new RiegoModel(
+                    cursor.getLong(0),
+                    cursor.getLong(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getLong(4),
+                    cursor.getLong(5),
+                    cursor.getString(6),
+                    cursor.getLong(7),
+                    cursor.getString(8),
+                    cursor.getLong(9));
+            listadeBDD.add(riegoBDD);
+        } while (cursor.moveToNext());
+
+        cursor.close();
+        return listadeBDD.get(0);
+    }
+
     public ArrayList<RiegoModel> consultaRiegos(){
         ArrayList<RiegoModel> listadeBDD = new ArrayList<RiegoModel>();
         SQLiteDatabase bd = ayudanteBaseDeDatos.getReadableDatabase();
