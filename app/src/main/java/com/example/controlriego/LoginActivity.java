@@ -191,7 +191,7 @@ public class LoginActivity extends AppCompatActivity{
             DescargarData(fincas,lotes,goteros,goterosLote);
 
             //Prueba de Insert Riego y detalle-riego
-            RiegoModel riego1 = new RiegoModel();
+            /*RiegoModel riego1 = new RiegoModel();
             riego1.setId_lote(1);
             riego1.setFecha_inicio("15/2/2020");
             riego1.setFecha_fin("16/2/2020");
