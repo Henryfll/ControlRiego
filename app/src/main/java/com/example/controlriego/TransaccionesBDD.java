@@ -422,7 +422,7 @@ public class TransaccionesBDD {
     public ArrayList<GoterosLotesModel> consultaParaSyncGoterosLotes(){
         ArrayList<GoterosLotesModel> listadeBDD = new ArrayList<GoterosLotesModel>();
         SQLiteDatabase bd = ayudanteBaseDeDatos.getReadableDatabase();
-        Cursor cursor=bd.rawQuery("select * from goteroslotes where estado_sinc=0 ", null);
+        Cursor cursor=bd.rawQuery("select * from goteroslotes where estado_sinc=1 ", null);
         if (cursor == null) return listadeBDD;
         if (!cursor.moveToFirst()) return listadeBDD;
 
@@ -446,6 +446,103 @@ public class TransaccionesBDD {
         if(consultaExisteFinca(id_lote_gotero).size()>0){
             db.execSQL("UPDATE goteroslotes SET estado_sinc=0 WHERE id_lote_gotero='"+id_lote_gotero+"'");
         }
+        db.close();
+    }
+
+    public ArrayList<RegistroLluviaModel> consultaParaSyncRegistroLluvia(){
+        ArrayList<RegistroLluviaModel> registrosBDD = new ArrayList<RegistroLluviaModel>();
+        SQLiteDatabase db = ayudanteBaseDeDatos.getReadableDatabase();
+        Cursor cursor=db.rawQuery("select * from registro_lluvia where estado_sinc=1 ", null);
+        if (cursor == null) return registrosBDD;
+        if (!cursor.moveToFirst()) return registrosBDD;
+
+        do {
+            RegistroLluviaModel registroBDD = new RegistroLluviaModel(
+                    cursor.getLong(0),
+                    cursor.getLong(1),
+                    cursor.getString(2),
+                    cursor.getDouble(3),
+                    cursor.getString(4),
+                    cursor.getLong(5),
+                    cursor.getString(6),
+                    cursor.getLong(7),
+                    cursor.getString(8),
+                    cursor.getString(9));
+            registrosBDD.add(registroBDD);
+        } while (cursor.moveToNext());
+        cursor.close();
+        return registrosBDD;
+    }
+
+    public void actualizarEstadoSyncdeRegistroLluvia(long id_registro_lluvia){
+        SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
+        db.execSQL("UPDATE registro_lluvia SET estado_sinc=0 WHERE id_registro_lluvia='"+id_registro_lluvia+"'");
+        db.close();
+    }
+
+    public ArrayList<RiegoModel> consultaParaSyncRiegos(){
+        ArrayList<RiegoModel> listadeBDD = new ArrayList<RiegoModel>();
+        SQLiteDatabase bd = ayudanteBaseDeDatos.getReadableDatabase();
+        Cursor cursor=bd.rawQuery("select * from riego where estado_sinc=1 ", null);
+        if (cursor == null) return listadeBDD;
+        if (!cursor.moveToFirst()) return listadeBDD;
+
+        do {
+            RiegoModel riegoBDD = new RiegoModel(
+                    cursor.getLong(0),
+                    cursor.getLong(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getLong(4),
+                    cursor.getLong(5),
+                    cursor.getString(6),
+                    cursor.getLong(7),
+                    cursor.getString(8),
+                    cursor.getLong(9));
+
+            listadeBDD.add(riegoBDD);
+        } while (cursor.moveToNext());
+
+        cursor.close();
+        return listadeBDD;
+    }
+
+    public void actualizarEstadoSyncdeRiegos(long id_riego){
+        SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
+        db.execSQL("UPDATE riego SET estado_sinc=0 WHERE id_riego='"+id_riego+"'");
+        db.close();
+    }
+
+    public ArrayList<DetalleRiegoModel> consultaParaSyncDetalleRiegos(){
+        ArrayList<DetalleRiegoModel> listadeBDD = new ArrayList<DetalleRiegoModel>();
+        SQLiteDatabase bd = ayudanteBaseDeDatos.getReadableDatabase();
+        Cursor cursor=bd.rawQuery("select * from detalleriego where estado_sinc=1", null);
+        if (cursor == null) return listadeBDD;
+        if (!cursor.moveToFirst()) return listadeBDD;
+
+        do {
+            DetalleRiegoModel detalleriegoBDD = new DetalleRiegoModel(
+                    cursor.getLong(0),
+                    cursor.getLong(1),
+                    cursor.getLong(2),
+                    cursor.getInt(3),
+                    cursor.getLong(4),
+                    cursor.getLong(5),
+                    cursor.getString(6),
+                    cursor.getLong(7),
+                    cursor.getString(8),
+                    cursor.getLong(9));
+
+            listadeBDD.add(detalleriegoBDD);
+        } while (cursor.moveToNext());
+
+        cursor.close();
+        return listadeBDD;
+    }
+
+    public void actualizarEstadoSyncdeDetalleRiegos(long id_detalle_riego){
+        SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
+        db.execSQL("UPDATE detalleriego SET estado_sinc=0 WHERE id_detalle_riego='"+id_detalle_riego+"'");
         db.close();
     }
 

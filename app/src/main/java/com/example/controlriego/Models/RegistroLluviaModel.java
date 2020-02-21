@@ -31,6 +31,19 @@ public class RegistroLluviaModel {
         this.estado_sinc = estado_sinc;
     }
 
+    public RegistroLluviaModel(long id_registro_lluvia, long id_finca, String fecha_lluvia, double milimetro_cubico, String estado, long id_usu_create, String fecha_creacion, long id_usu_update, String fecha_update, String estado_sinc) {
+        this.id_registro_lluvia = id_registro_lluvia;
+        this.id_finca = id_finca;
+        this.fecha_lluvia = fecha_lluvia;
+        this.milimetro_cubico = milimetro_cubico;
+        this.estado = estado;
+        this.id_usu_create = id_usu_create;
+        this.fecha_creacion = fecha_creacion;
+        this.id_usu_update = id_usu_update;
+        this.fecha_update = fecha_update;
+        this.estado_sinc = estado_sinc;
+    }
+
     public long getId_registro_lluvia() {
         return id_registro_lluvia;
     }
