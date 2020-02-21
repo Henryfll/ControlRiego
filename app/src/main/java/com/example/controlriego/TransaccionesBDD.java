@@ -419,6 +419,28 @@ public class TransaccionesBDD {
     }
 
     //Para la sincronizacion
+    public ArrayList<GoterosLotesModel> consultaParaSyncGoterosLotes(){
+        ArrayList<GoterosLotesModel> listadeBDD = new ArrayList<GoterosLotesModel>();
+        SQLiteDatabase bd = ayudanteBaseDeDatos.getReadableDatabase();
+        Cursor cursor=bd.rawQuery("select * from goteroslotes where estado_sinc=0 ", null);
+        if (cursor == null) return listadeBDD;
+        if (!cursor.moveToFirst()) return listadeBDD;
+
+        do {
+            GoterosLotesModel itemBDD = new GoterosLotesModel(
+                    cursor.getLong(0),
+                    cursor.getLong(1),
+                    cursor.getLong(2),
+                    cursor.getInt(3),
+                    cursor.getLong(4));
+
+            listadeBDD.add(itemBDD);
+        } while (cursor.moveToNext());
+
+        cursor.close();
+        return listadeBDD;
+    }
+
     public void actualizarEstadoSyncdeGoterosLotes(long id_lote_gotero){
         SQLiteDatabase db = ayudanteBaseDeDatos.getWritableDatabase();
         if(consultaExisteFinca(id_lote_gotero).size()>0){
