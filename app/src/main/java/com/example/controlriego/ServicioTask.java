@@ -97,7 +97,7 @@ public class ServicioTask extends AsyncTask<Void, Void, String> {
                 result= sb.toString();
             }
             else{
-                result= new String("Error: "+ responseCode);
+                result= new String(String.valueOf(responseCode));
             }
 
 

@@ -34,7 +34,7 @@
                     android:textSize="17dp" />
 
                 <Switch
-                    android:id="@+id/switch1"
+                    android:id="@+id/sw_llave"
                     android:layout_width="10dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

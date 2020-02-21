@@ -96,17 +96,22 @@ public class LoginActivity extends AppCompatActivity{
         } catch (TimeoutException e) {
             e.printStackTrace();
         }
-        if (resultado=="406"){
+        if(resultado==null){
 
+            Toast.makeText(this,"Sin Conexión",Toast.LENGTH_LONG).show();
         }else{
-            Gson gson = new Gson();
-            Type type = new TypeToken< ArrayList<UsuarioDto>>(){}.getType();
-            ArrayList<UsuarioDto>Respuesta=gson.fromJson(resultado, type);
-            if(Respuesta!=null){
-                UsuarioRespuesta=Respuesta.get(0);
+            if (resultado.equals("406")){
+                System.out.println("ERROR: "+resultado);
+            }else{
+                Gson gson = new Gson();
+                Type type = new TypeToken< ArrayList<UsuarioDto>>(){}.getType();
+                ArrayList<UsuarioDto>Respuesta=gson.fromJson(resultado, type);
+                if(Respuesta!=null){
+                    UsuarioRespuesta=Respuesta.get(0);
+                }
+                UsuarioController usuarioRegistro = new UsuarioController(this);
+                usuarioRegistro.RegistrarNuevoUsuario(username,password);
             }
-            UsuarioController usuarioRegistro = new UsuarioController(this);
-            usuarioRegistro.RegistrarNuevoUsuario(username,password);
         }
         if(UsuarioRespuesta!=null){
 

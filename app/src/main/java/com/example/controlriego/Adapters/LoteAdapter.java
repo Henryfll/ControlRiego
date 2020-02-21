@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +20,7 @@ import com.example.controlriego.Fragment.DialogoGoteroFragment;
 import com.example.controlriego.Models.LoteModel;
 import com.example.controlriego.R;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class LoteAdapter extends BaseAdapter {
@@ -26,6 +29,7 @@ public class LoteAdapter extends BaseAdapter {
     ArrayList<LoteModel> listLotes = new ArrayList<>();
     private static LayoutInflater inflater = null;
     TextView txtNombrePropiedad;
+    Switch sw_llave;
     private ImageButton btnDialogoGoteroLote;
 
     @SuppressLint("MissingPermission")
@@ -60,6 +64,17 @@ public class LoteAdapter extends BaseAdapter {
 
         txtNombrePropiedad = view.findViewById(R.id.nombre_item_lote);
         txtNombrePropiedad.setText(listLotes.get(position).getNombre());
+
+        sw_llave =view.findViewById(R.id.sw_llave);
+        sw_llave.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    System.out.println("OPEN");
+                } else {
+                    System.out.println("close");
+                }
+            }
+        });
 
         btnDialogoGoteroLote = view.findViewById(R.id.btn_goterosLote);
         btnDialogoGoteroLote.setOnClickListener(new View.OnClickListener() {
